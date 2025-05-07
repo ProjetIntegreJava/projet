@@ -1,4 +1,4 @@
 package modelPackage;
 
-public class Game {
+public class Player {
 }

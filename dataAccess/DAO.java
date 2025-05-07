@@ -1,4 +1,4 @@
 package dataAccess;
 
-public class DAO {
+public interface DAO {
 }
