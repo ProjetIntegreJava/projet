@@ -34,7 +34,7 @@ public class MainWindow extends JFrame {
         this.appMenu = new JMenu("Application");
         this.menuBar.add(this.appMenu);
         this.exit = new JMenuItem("Quitter");
-        this.exit.addActionListener(_ -> {
+        this.exit.addActionListener(e -> {
             //connectionController.closeConnection();
             System.exit(0);
         });
@@ -42,36 +42,36 @@ public class MainWindow extends JFrame {
 
         this.home = new JMenuItem("Accueil");
         this.appMenu.add(this.home);
-        this.home.addActionListener(_ -> panelManager.changePanel("HomePanel"));
+        this.home.addActionListener(e -> panelManager.changePanel("HomePanel"));
         this.profilMenu = new JMenu("Profil");
         this.menuBar.add(this.profilMenu);
         this.inscription = new JMenuItem("Créer un compte");
         this.profilMenu.add(this.inscription);
-        this.inscription.addActionListener(_ -> panelManager.changePanel("NewAccountPanel"));
+        this.inscription.addActionListener(e -> panelManager.changePanel("NewAccountPanel"));
         this.profiles = new JMenuItem("Profiles");
         this.profilMenu.add(this.profiles);
-        this.profiles.addActionListener(_ -> panelManager.changePanel("Profiles"));
+        this.profiles.addActionListener(e -> panelManager.changePanel("Profiles"));
 
         this.searchMenu = new JMenu("Recherches");
         this.menuBar.add(this.searchMenu);
         this.playerTournaments = new JMenuItem("Tournois d'un joueur");
         this.searchMenu.add(this.playerTournaments);
-        this.playerTournaments.addActionListener(_ -> panelManager.changePanel("TournamentsSearch"));
+        this.playerTournaments.addActionListener(e -> panelManager.changePanel("TournamentsSearch"));
         this.gameBetweenTwoDates = new JMenuItem("Parties entre 2 dates");
         this.searchMenu.add(this.gameBetweenTwoDates);
-        this.gameBetweenTwoDates.addActionListener(_ -> panelManager.changePanel("EloSearch"));
+        this.gameBetweenTwoDates.addActionListener(e -> panelManager.changePanel("EloSearch"));
         this.playerAllMatches = new JMenuItem("Matchs d'un joueur");
         this.searchMenu.add(this.playerAllMatches);
-        this.playerAllMatches.addActionListener(_ -> panelManager.changePanel("MatchDataSearch"));
+        this.playerAllMatches.addActionListener(e -> panelManager.changePanel("MatchDataSearch"));
 
         this.statMenu = new JMenu("Statistiques");
         this.menuBar.add(this.statMenu);
         this.winrate = new JMenuItem("Blanc/Noir winrate");
         this.statMenu.add(this.winrate);
-        this.winrate.addActionListener(_ -> panelManager.changePanel("WinratePanel"));
+        this.winrate.addActionListener(e -> panelManager.changePanel("WinratePanel"));
         this.OpeningUsage = new JMenuItem("Utilisation des ouvertures");
         this.statMenu.add(this.OpeningUsage);
-        this.OpeningUsage.addActionListener(_ -> panelManager.changePanel("OpeningsStats"));
+        this.OpeningUsage.addActionListener(e -> panelManager.changePanel("OpeningsStats"));
 
         this.pack();
 

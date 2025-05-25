@@ -31,4 +31,29 @@ public class Team {
         this.foundingDate = foundingDate;
         this.hasBeenWorldChampion = hasBeenWorldChampion;
     }
+
+    public String getName() {
+        return name;
+    }
+    public Club getClub() {
+        return club;
+    }
+    public Region getRegion() {
+        return region;
+    }
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+    public LocalDate getFoundingDate() {
+        return foundingDate;
+    }
+    public boolean isHasBeenWorldChampion() {
+        return hasBeenWorldChampion;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public int getNbFollowers() {
+        return nbFollower;
+    }
 }
