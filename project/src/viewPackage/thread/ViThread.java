@@ -20,7 +20,7 @@ public class ViThread extends Thread {
         this.images = new ArrayList<>();
         for(int i = 0; i < NB_IMAGES; i++) {
             try {
-                images.add(ImageIO.read(new File("viewPackage/thread/resources/images/" + BASE_IMAGE_NAME + i + ".png")));
+                images.add(ImageIO.read(new File("project/src/viewPackage/thread/resources/images/" + BASE_IMAGE_NAME + i + ".png")));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -28,8 +28,8 @@ public class ViThread extends Thread {
     }
     @Override
     public void run() {
-        try {
-            while(true) {
+        while(true) {
+            try {
                 if(NB_IMAGES - 1 > this.currentIndex) {
                     this.currentIndex++;
                 } else {
@@ -38,9 +38,9 @@ public class ViThread extends Thread {
                 this.panelManager.right.setCurrImage(this.images.get(this.currentIndex));
                 this.panelManager.right.repaint();
                 Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
     }
 }
