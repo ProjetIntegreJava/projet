@@ -14,11 +14,7 @@ public class GamesPanel extends JPanel implements Panel {
 
     @Override
     public void enterPanel() {
-
-    }
-
-    @Override
-    public void init() {
         this.setLayout(new BorderLayout());
     }
+
 }

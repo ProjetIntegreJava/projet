@@ -1,9 +1,9 @@
 package modelPackage.searches;
 
 public class ResultParticipationData {
-    public final String firstName, lastName;
-    public final String championName, championRace, role;
-    public final Integer kills, deaths, assists, goldEarned, damageReceived, damage, wardScore, creepScore;
+    private final String firstName, lastName;
+    private final String championName, championRace, role;
+    private final Integer kills, deaths, assists, goldEarned, damageReceived, damage, wardScore, creepScore;
 
     public ResultParticipationData(
             String firstName, String lastName, String championName, String championRace, String role,
@@ -23,5 +23,57 @@ public class ResultParticipationData {
         this.damage = damage;
         this.wardScore = wardScore;
         this.creepScore = creepScore;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getChampionName() {
+        return championName;
+    }
+
+    public String getChampionRace() {
+        return championRace;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public Integer getKills() {
+        return kills;
+    }
+
+    public Integer getDeaths() {
+        return deaths;
+    }
+
+    public Integer getAssists() {
+        return assists;
+    }
+
+    public Integer getGoldEarned() {
+        return goldEarned;
+    }
+
+    public Integer getDamageReceived() {
+        return damageReceived;
+    }
+
+    public Integer getDamage() {
+        return damage;
+    }
+
+    public Integer getWardScore() {
+        return wardScore;
+    }
+
+    public Integer getCreepScore() {
+        return creepScore;
     }
 }

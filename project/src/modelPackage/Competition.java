@@ -39,4 +39,9 @@ public class Competition {
     public void setLevel(CompetitionLevel level) {
         this.level = level;
     }
+
+    @Override
+    public String toString() {
+        return this.name + "-" + this.year;
+    }
 }

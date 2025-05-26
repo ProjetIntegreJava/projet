@@ -10,23 +10,17 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class RankingPanel extends JPanel implements Panel {
-    private PanelManager panelManager;
-    private MatchController matchController;
+    private final PanelManager panelManager;
+    private final MatchController matchController;
 
     public RankingPanel(PanelManager panelManager) {
         this.panelManager = panelManager;
         this.matchController = new MatchController();
-        init();
     }
 
     @Override
     public void enterPanel() {
         this.removeAll();
-        this.init();
-    }
-
-    @Override
-    public void init() {
         this.setLayout(new BorderLayout());
 
         // Create the top panel
@@ -36,7 +30,7 @@ public class RankingPanel extends JPanel implements Panel {
         // Fetch matches and populate combo box
         JComboBox<String> comboBox = new JComboBox<>();
         try {
-            ArrayList<Match> matches = matchController.getAllMatchs();
+            ArrayList<Match> matches = matchController.getAllMatches();
             for (Match match : matches) {
                 comboBox.addItem(match.getTeamBlue().getName() + " vs " + match.getTeamRed().getName() + " - " + match.getCompetition().getName() + " (" + match.getOccurrenceDate() + ")");
             }

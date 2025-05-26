@@ -17,4 +17,31 @@ public class ResultMatchData {
         this.teamRedName = teamRedName;
         this.clubRedName = clubRedName;
     }
+    public String getReplayLink() {
+        return replayLink;
+    }
+
+    public LocalDate getOccurrenceDate() {
+        return occurrenceDate;
+    }
+
+    public boolean isBlueWinner() {
+        return isBlueWinner;
+    }
+
+    public String getTeamBlueName() {
+        return teamBlueName;
+    }
+
+    public String getClubBlueName() {
+        return clubBlueName;
+    }
+
+    public String getTeamRedName() {
+        return teamRedName;
+    }
+
+    public String getClubRedName() {
+        return clubRedName;
+    }
 }

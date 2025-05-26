@@ -14,11 +14,6 @@ public class ModificationPanel extends JPanel implements Panel {
 
     @Override
     public void enterPanel() {
-
-    }
-
-    @Override
-    public void init() {
         this.setLayout(new BorderLayout());
     }
 }

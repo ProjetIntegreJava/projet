@@ -12,6 +12,7 @@ import modelPackage.Team;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class MatchDBAccess implements MatchDataAccess{
@@ -69,8 +70,35 @@ public class MatchDBAccess implements MatchDataAccess{
 
     @Override
     public ArrayList<Match> getAllMatchs() throws ReadMatchException {
+        ArrayList<Match> matches = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(
+                    "SELECT `match`.occurrence_date, `match`.id, `match`.team_blue, `match`.team_red FROM `match`"
+            );
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String teamBlueName = resultSet.getString("team_blue");
+                String teamRedName = resultSet.getString("team_red");
+                int matchID = resultSet.getInt("id");
+                LocalDate occurrenceDate = resultSet.getDate("occurrence_date").toLocalDate();
+                Match match = new Match(
+                        matchID,
+                        new Team(teamBlueName),
+                        new Team(teamRedName),
+                        null, // Competition will be set later
+                        null, // Creation date will be set later
+                        occurrenceDate,
+                        false, // isBlueWin will be set later
+                        null, // replayLink will be set later
+                        null  // summary will be set later
+                );
+                matches.add(match);
+            }
+        } catch (SQLException e) {
+            throw new ReadMatchException("Une erreur s'est produite lors de la lecture des matchs");
+        }
         // Implementation for getting all matches from the database
-        return new ArrayList<>(); // Placeholder return
+        return matches; // Placeholder return
     }
 
     private Match resultSetToMatch(ResultSet resultSet) throws ReadMatchException, ReadTeamException, ReadCompetitionException{

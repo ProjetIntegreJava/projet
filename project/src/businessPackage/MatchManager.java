@@ -8,7 +8,7 @@ import modelPackage.Match;
 import java.util.ArrayList;
 
 public class MatchManager {
-    private MatchDataAccess dao;
+    private final MatchDataAccess dao;
 
     public MatchManager() {
         dao = new MatchDBAccess();
@@ -41,7 +41,7 @@ public class MatchManager {
         }
         dao.updateMatch(match);
     }
-    public void deleteMatchs(ArrayList<Integer> matchId) throws DeleteMatchException {
+    public void deleteMatches(ArrayList<Integer> matchId) throws DeleteMatchException {
         ArrayList<Integer> idMatchList = new ArrayList<Integer>();
         for (int id : matchId) {
             try {
@@ -56,7 +56,7 @@ public class MatchManager {
         dao.deleteMatchs(idMatchList);
     }
 
-    public ArrayList<Match> getAllMatchs() throws ReadMatchException{
+    public ArrayList<Match> getAllMatches() throws ReadMatchException{
         return dao.getAllMatchs();
     }
 }

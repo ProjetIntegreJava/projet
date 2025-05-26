@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class ResearchDBAccess implements ResearchDataAccess {
+public class SearchDBAccess implements SearchDataAccess {
     @Override
     public ArrayList<ResultMatchData> getSearchMatchData(Competition competition, String championName) throws SearchDataAccessException  {
         ArrayList<ResultMatchData> resultMatchData = new ArrayList<>();
@@ -116,6 +116,65 @@ public class ResearchDBAccess implements ResearchDataAccess {
     @Override
     public ArrayList<ResultTeamHistoryData> getSearchTeamHistoryData(String teamName, LocalDate beginningDate, LocalDate endingDate) throws SearchDataAccessException {
         ArrayList<ResultTeamHistoryData> resultTeamHistoryData = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement("""
+                SELECT th.beginning_date, th.ending_date,
+                    pl1.first_name AS player1_first_name, pl1.last_name AS player1_last_name,
+                    pl2.first_name AS player2_first_name, pl2.last_name AS player2_last_name,
+                    pl3.first_name AS player3_first_name, pl3.last_name AS player3_last_name,
+                    pl4.first_name AS player4_first_name, pl4.last_name AS player4_last_name,
+                    pl5.first_name AS player5_first_name, pl5.last_name AS player5_last_name,
+                    t.name AS team_name, c.name AS club_name, c.nationality
+                FROM team_history th
+                JOIN player pl1 ON th.id_player_one = pl1.id
+                JOIN player pl2 ON th.id_player_two = pl2.id
+                JOIN player pl3 ON th.id_player_three = pl3.id
+                JOIN player pl4 ON th.id_player_four = pl4.id
+                JOIN player pl5 ON th.id_player_five = pl5.id
+                JOIN team t ON th.team = t.name
+                JOIN club c ON t.club = c.name
+                WHERE\s
+                    t.name = ?
+                    AND th.beginning_date BETWEEN ? AND ?
+                    AND th.ending_date BETWEEN ? and ?
+                    ORDER by th.beginning_date;
+            """);
+            preparedStatement.setString(1, teamName);
+            preparedStatement.setObject(2, beginningDate);
+            preparedStatement.setObject(3, endingDate);
+            preparedStatement.setObject(4, beginningDate);
+            preparedStatement.setObject(5, endingDate);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                LocalDate beginning = resultSet.getObject("beginning_date", LocalDate.class);
+                LocalDate ending = resultSet.getObject("ending_date", LocalDate.class);
+                String player1FirstName = resultSet.getString("player1_first_name");
+                String player1LastName = resultSet.getString("player1_last_name");
+                String player2FirstName = resultSet.getString("player2_first_name");
+                String player2LastName = resultSet.getString("player2_last_name");
+                String player3FirstName = resultSet.getString("player3_first_name");
+                String player3LastName = resultSet.getString("player3_last_name");
+                String player4FirstName = resultSet.getString("player4_first_name");
+                String player4LastName = resultSet.getString("player4_last_name");
+                String player5FirstName = resultSet.getString("player5_first_name");
+                String player5LastName = resultSet.getString("player5_last_name");
+                String teamNameResult = resultSet.getString("team_name");
+                String clubName = resultSet.getString("club_name");
+                String clubNationality = resultSet.getString("nationality");
+                ResultTeamHistoryData teamHistoryData = new ResultTeamHistoryData(
+                        player1FirstName, player1LastName,
+                        player2FirstName, player2LastName,
+                        player3FirstName, player3LastName,
+                        player4FirstName, player4LastName,
+                        player5FirstName, player5LastName,
+                        teamNameResult, clubName, clubNationality,
+                        beginning, ending
+                );
+                resultTeamHistoryData.add(teamHistoryData);
+            }
+        } catch (SQLException e) {
+            throw new SearchDataAccessException("Error while searching team history data");
+        }
         return resultTeamHistoryData;
     }
 }

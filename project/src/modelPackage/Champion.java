@@ -1,8 +1,15 @@
 package modelPackage;
 
 public class Champion {
-    private String name;
-    public Champion(String name){
+    private final String name, race;
+    public Champion(String name, String race){
         this.name = name;
+        this.race = race;
+    }
+    public String getName() {
+        return name;
+    }
+    public String getRace() {
+        return this.race;
     }
 }

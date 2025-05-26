@@ -118,19 +118,20 @@ public class TeamDBAccess implements TeamDataAccess{
         ArrayList<Team> teams = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(
-                    "SELECT \n" +
-                            "    t.name,\n" +
-                            "    t.region,\n" +
-                            "    t.creation_date,\n" +
-                            "    t.founding_date,\n" +
-                            "    t.has_been_world_champion,\n" +
-                            "    t.description,\n" +
-                            "    t.nb_followers,\n" +
-                            "    c.name AS club_name,\n" +
-                            "    c.CEO,\n" +
-                            "    c.nationality\n" +
-                            "FROM team t\n" +
-                            "JOIN club c ON t.club = c.name;");
+                    """
+                            SELECT\s
+                                t.name,
+                                t.region,
+                                t.creation_date,
+                                t.founding_date,
+                                t.has_been_world_champion,
+                                t.description,
+                                t.nb_followers,
+                                c.name AS club_name,
+                                c.CEO,
+                                c.nationality
+                            FROM team t
+                            JOIN club c ON t.club = c.name;""");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {

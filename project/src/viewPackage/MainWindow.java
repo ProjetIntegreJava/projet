@@ -24,7 +24,7 @@ public class MainWindow extends JFrame {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                //connectionController.closeConnection();
+                connectionController.closeConnection();
                 System.exit(0);
             }
         });

@@ -48,4 +48,9 @@ public class Match {
     public String getSummary() {
         return summary;
     }
+
+    @Override
+    public String toString() {
+        return this.teamBlue.getName() + " - " + this.teamRed.getName() + " @ " + this.occurrenceDate.toString();
+    }
 }
