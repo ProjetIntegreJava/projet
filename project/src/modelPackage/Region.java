@@ -5,4 +5,7 @@ public class Region {
     public Region(String name){
         this.name = name;
     }
+    public String getName() {
+        return name;
+    }
 }
