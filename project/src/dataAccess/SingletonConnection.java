@@ -18,7 +18,10 @@ public class SingletonConnection {
                     password
             );
         } catch (SQLException e) {
-            throw new CantConnectToDbException();
+            throw new CantConnectToDbException(e.getMessage());
         }
+    }
+    public static void closeConnection() {
+
     }
 }

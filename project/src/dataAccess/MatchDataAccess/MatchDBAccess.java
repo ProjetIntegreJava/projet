@@ -24,7 +24,7 @@ public class MatchDBAccess implements MatchDataAccess{
             preparedStatement.setString(2, match.getTeamRed().getName());
             preparedStatement.setString(3, match.getCompetition().getName());
             preparedStatement.setInt(4, match.getCompetition().getYear());
-            preparedStatement.setDate(5, java.sql.Date.valueOf(match.getOccurenceDate()));
+            preparedStatement.setDate(5, java.sql.Date.valueOf(match.getOccurrenceDate()));
             preparedStatement.setBoolean(6, match.isBlueWin());
             preparedStatement.setString(7, match.getReplayLink());
             preparedStatement.setString(8, match.getSummary());

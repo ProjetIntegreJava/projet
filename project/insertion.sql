@@ -273,7 +273,7 @@ INSERT INTO team(`name`, club, region, founding_date, has_been_world_champion, `
     ('Bilibili Gaming', 'Bilibili Gaming', 'Chine', '2017-12-17', FALSE, NULL, NULL);
 
 
-INSERT INTO `match`(team_blue, team_red, competition_name, competition_year, occurence_date, is_blue_win, replay_link, summary) VALUES
+INSERT INTO `match`(team_blue, team_red, competition_name, competition_year, occurrence_date, is_blue_win, replay_link, summary) VALUES
                                                                                                 -- LEC
     ('Karmine Corp', 'Rogue', 'LEC', 2025, '2025-05-03', TRUE, 'https://youtu.be/WmLg-d_DaiU?si=cZxZzHMIOut5FR4H', NULL),
     ('Team Heretics', 'Fnatic', 'LEC', 2025,'2025-05-05', FALSE, 'https://youtu.be/LztVPq24CJs?si=uaD3nw-qvQh_KuSX', NULL),

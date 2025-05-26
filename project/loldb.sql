@@ -1,4 +1,4 @@
-DROP DATABASE lol;
+DROP DATABASE IF EXISTS lol;
 CREATE DATABASE lol;
 USE lol;
 
@@ -69,7 +69,7 @@ CREATE TABLE `match` (
     competition_name VARCHAR(255) NOT NULL,
     competition_year INT NOT NULL,
     creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    occurence_date DATE NOT NULL,
+    occurrence_date DATE NOT NULL,
     is_blue_win BOOLEAN NOT NULL,
     replay_link TEXT NULL,
     summary TEXT NULL,

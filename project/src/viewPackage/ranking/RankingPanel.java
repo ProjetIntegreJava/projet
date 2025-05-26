@@ -38,7 +38,7 @@ public class RankingPanel extends JPanel implements Panel {
         try {
             ArrayList<Match> matches = matchController.getAllMatchs();
             for (Match match : matches) {
-                comboBox.addItem(match.getTeamBlue().getName() + " vs " + match.getTeamRed().getName() + " - " + match.getCompetition().getName() + " (" + match.getOccurenceDate() + ")");
+                comboBox.addItem(match.getTeamBlue().getName() + " vs " + match.getTeamRed().getName() + " - " + match.getCompetition().getName() + " (" + match.getOccurrenceDate() + ")");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erreur lors de la récupération des matchs : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);

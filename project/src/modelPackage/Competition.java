@@ -11,6 +11,9 @@ public class Competition {
         this.region = region;
         this.level = level;
     }
+    public Competition(String name, int year) {
+        this(name, year, new Region("unknown"), new CompetitionLevel("unknown"));
+    }
     public String getName() {
         return name;
     }
