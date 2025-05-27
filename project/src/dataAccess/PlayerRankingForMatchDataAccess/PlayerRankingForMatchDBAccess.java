@@ -11,7 +11,6 @@ import exceptionPackage.Champion.ReadChampionException;
 import exceptionPackage.Match.ReadMatchException;
 import exceptionPackage.Player.ReadPlayerException;
 import exceptionPackage.PlayerRankingForMatch.ReadPlayerRankingForMatchException;
-import modelPackage.Champion;
 import modelPackage.Participation;
 import modelPackage.Role;
 
@@ -26,7 +25,7 @@ public class PlayerRankingForMatchDBAccess implements PlayerRankingForMatchDataA
         ArrayList<Participation> allPlayerForTheGame = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(
-                    "SELECT * FROM participation WHERE match_id = ?");
+                    "SELECT * FROM participation WHERE id_match = ?");
             preparedStatement.setInt(1, matchId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -34,7 +33,7 @@ public class PlayerRankingForMatchDBAccess implements PlayerRankingForMatchDataA
                 allPlayerForTheGame.add(resultSetToParticipation(resultSet));
             }
         } catch (SQLException e) {
-            throw new ReadPlayerRankingForMatchException("Une erreur s'est produite lors de la lecture des participation des joueurs pour le match");
+            throw new ReadPlayerRankingForMatchException("Une erreur s'est produite lors de la lecture des participation des joueurs pour le match" + e.getMessage());
         }
         return allPlayerForTheGame;
     }
@@ -45,21 +44,22 @@ public class PlayerRankingForMatchDBAccess implements PlayerRankingForMatchDataA
         ChampionDataAccess championDataAccess = new ChampionDBAccess();
         try {
             return new Participation(
-                    playerDataAccess.getPlayerById(resultSet.getInt("player_id")),
-                    matchDataAccess.getMatch(resultSet.getInt("match_id")),
+                    playerDataAccess.getPlayerById(resultSet.getInt("id_player")),
+                    matchDataAccess.getMatch(resultSet.getInt("id_match")),
                     new Role(resultSet.getString("role")),
                     championDataAccess.getChampionByName(resultSet.getString("champion")),
                     resultSet.getInt("kills"),
                     resultSet.getInt("assists"),
-                    resultSet.getInt("deaths"),
+                    resultSet.getInt("death"),
                     resultSet.getInt("creep_score"),
                     resultSet.getInt("damage"),
-                    resultSet.getInt("ward_score"),
-                    resultSet.getInt("gold_earned"),
+                    resultSet.getInt("wards_score"),
+                    resultSet.getInt("golds_earn"),
                     resultSet.getInt("damage_received")
             );
         } catch (SQLException | ReadPlayerException | ReadMatchException | ReadChampionException e) {
-            throw new ReadPlayerRankingForMatchException("Une erreur s'est produite lors de la lecture de la participation du joueur");
+            System.out.println("Erreur lors de la lecture de la participation du joueur : " + e.getMessage());
+            throw new ReadPlayerRankingForMatchException("Une erreur s'est produite lors de la lecture de la participation du joueur" + e.getMessage());
         }
     }
 

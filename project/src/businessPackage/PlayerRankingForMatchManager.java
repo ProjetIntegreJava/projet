@@ -17,15 +17,18 @@ public class PlayerRankingForMatchManager {
         try {
             allPlayer = dao.getPlayerRankingForMatch(matchId);
         } catch (ReadPlayerRankingForMatchException e) {
-            System.out.println("Une erreur s'est produite lors de la lecture des participations des joueurs pour le match : ");
+            throw new ReadPlayerRankingForMatchException("Erreur lors de la récupération du classement des joueurs pour le match" + e.getMessage());
         }
         return sortByScore(allPlayer);
     }
 
     private ArrayList<Participation> sortByScore(ArrayList<Participation> allPlayer) {
+        for (Participation participation : allPlayer) {
+            participation.setScore(calculateScore(participation));
+        }
         allPlayer.sort((p1, p2) -> {
-            Float score1 = calculateScore(p1);
-            Float score2 = calculateScore(p2);
+            Float score1 =  p1.getScore();
+            Float score2 = p2.getScore();
             return Float.compare(score2, score1);
         });
         return allPlayer;

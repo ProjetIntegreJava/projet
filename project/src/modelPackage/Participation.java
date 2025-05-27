@@ -15,6 +15,7 @@ public class Participation {
     private int wardScore;
     private int goldEarn;
     private int damageReceived;
+    private Float score;
 
     public Participation(Player player, Match match, Role role, Champion champion, int kills, int assists, int death, int creepScore, int damage, int wardScore, int goldEarn, int damageReceived){
         setPlayer(player);
@@ -29,6 +30,10 @@ public class Participation {
         setWardScore(wardScore);
         setGoldEarn(goldEarn);
         setDamageReceived(damageReceived);
+    }
+    public Participation(Player player, Match match, Role role, Champion champion, int kills, int assists, int death, int creepScore, int damage, int wardScore, int goldEarn, int damageReceived, Float score) {
+        this(player, match, role, champion, kills, assists, death, creepScore, damage, wardScore, goldEarn, damageReceived);
+        setScore(score);
     }
     public void setPlayer(Player player) {
         this.player = player;
@@ -65,6 +70,9 @@ public class Participation {
     }
     public void setDamageReceived(int damageReceived) {
         this.damageReceived = damageReceived;
+    }
+    public void setScore(Float score) {
+        this.score = score;
     }
     public Player getPlayer() {
         return player;
@@ -103,5 +111,8 @@ public class Participation {
     }
     public int getDamageReceived() {
         return damageReceived;
+    }
+    public Float getScore() {
+        return score;
     }
 }

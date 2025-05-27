@@ -111,7 +111,7 @@ public class MatchDBAccess implements MatchDataAccess{
                     teamDBAccess.getTeam(resultSet.getString("team_red")),
                     competitionDBAccess.getCompetition(resultSet.getString("competition_name"), resultSet.getInt("competition_year")),
                     resultSet.getDate("creation_date").toLocalDate(),
-                    resultSet.getDate("occurence_date").toLocalDate(),
+                    resultSet.getDate("occurrence_date").toLocalDate(),
                     resultSet.getBoolean("is_blue_win"),
                     resultSet.getString("replay_link"),
                     resultSet.getString("summary")
