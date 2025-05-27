@@ -6,7 +6,7 @@ import modelPackage.Match;
 import java.util.ArrayList;
 
 public interface MatchDataAccess {
-    Match getMatch(int matchId) throws ReadMatchException;
+    Match getMatch(Integer matchId) throws ReadMatchException;
 
     void addMatch(Match match) throws AddMatchException;
 

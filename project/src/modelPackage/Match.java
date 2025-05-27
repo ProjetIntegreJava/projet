@@ -21,7 +21,12 @@ public class Match {
         this.summary = summary;
 
     }
-    public Match (Team teamBlue, Team teamRed, Competition competition, LocalDate creationDate, LocalDate occurrenceDate, boolean isBlueWin, String replayLink, String summary){
+
+    public Match (
+            Team teamBlue, Team teamRed, Competition competition,
+            LocalDate creationDate, LocalDate occurrenceDate,
+            boolean isBlueWin, String replayLink, String summary
+    ){
         this.id = null;
         this.teamBlue = teamBlue;
         this.teamRed = teamRed;
@@ -32,6 +37,7 @@ public class Match {
         this.replayLink = replayLink;
         this.summary = summary;
     }
+
     public Match(
             int id, String teamBlueName, String teamRedName, String competitionName,
             int competitionYear, LocalDate creationDate, LocalDate occurrenceDate,
@@ -47,7 +53,7 @@ public class Match {
         this.replayLink = replayLink;
         this.summary = summary;
     }
-    public int getId() {
+    public Integer getId() {
         return id;
     }
     public Team getTeamBlue() {
@@ -58,9 +64,6 @@ public class Match {
     }
     public Competition getCompetition() {
         return competition;
-    }
-    public LocalDate getCreationDate() {
-        return creationDate;
     }
     public LocalDate getOccurrenceDate() {
         return occurrenceDate;

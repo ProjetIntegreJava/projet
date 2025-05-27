@@ -3,6 +3,7 @@ package viewPackage.match;
 import controllerPackage.CompetitionController;
 import controllerPackage.MatchController;
 import controllerPackage.TeamController;
+import exceptionPackage.Match.AddMatchException;
 import modelPackage.Competition;
 import modelPackage.Match;
 import modelPackage.Region;
@@ -13,6 +14,7 @@ import viewPackage.PanelManager;
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -100,6 +102,17 @@ public class NewMatchPanel extends JPanel implements Panel {
         gridBag.setConstraints(winnerCheckBox, c);
         formPanel.add(winnerCheckBox);
 
+        JLabel summaryLabel = new JLabel("Match Summary: ");
+        c.gridwidth = GridBagConstraints.RELATIVE;
+        gridBag.setConstraints(summaryLabel, c);
+        formPanel.add(summaryLabel);
+        JTextArea summaryTextArea = new JTextArea(5, 20);
+        summaryTextArea.setLineWrap(true);
+        summaryTextArea.setWrapStyleWord(true);
+        JScrollPane summaryScrollPane = new JScrollPane(summaryTextArea);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        gridBag.setConstraints(summaryScrollPane, c);
+        formPanel.add(summaryScrollPane);
 
         this.add(formPanel, BorderLayout.NORTH);
 
@@ -111,6 +124,7 @@ public class NewMatchPanel extends JPanel implements Panel {
             Competition competitionComboBoxText = (Competition) competitionComboBox.getSelectedItem();
             Date occurrenceDate = (Date) occurrenceDateSpinner.getValue();
             String replayLinkText = replayLinkTextField.getText();
+            String summaryText = summaryTextArea.getText();
             boolean isBlueWin = winnerCheckBox.isSelected();
             if (teamRed == null || teamBlue == null || competitionComboBoxText == null || occurrenceDate == null) {
                 JOptionPane.showMessageDialog(this, "Please fill all required fields.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -121,7 +135,21 @@ public class NewMatchPanel extends JPanel implements Panel {
                 return;
             }
 
-            matchController.addMatch(new Match());
+            try {
+                matchController.addMatch(new Match(
+                        teamBlue,
+                        teamRed,
+                        competitionComboBoxText,
+                        LocalDate.now(),
+                        occurrenceDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                        isBlueWin,
+                        replayLinkText,
+                        summaryText
+                ));
+            } catch (AddMatchException ex) {
+                JOptionPane.showMessageDialog(this, "Error adding match: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
 
             panelManager.changePanel("MatchPanel");

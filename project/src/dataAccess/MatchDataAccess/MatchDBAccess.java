@@ -18,22 +18,29 @@ public class MatchDBAccess implements MatchDataAccess{
     public void addMatch(Match match) throws AddMatchException {
         try{
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(
-                    "INSERT INTO `match`(team_blue, team_red, competition_name, competition_year, occurence_date, is_blue_win, replay_link, summary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO `match`(team_blue, team_red, competition_name, competition_year, occurrence_date, is_blue_win, replay_link, summary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, match.getTeamBlue().getName());
             preparedStatement.setString(2, match.getTeamRed().getName());
             preparedStatement.setString(3, match.getCompetition().getName());
             preparedStatement.setInt(4, match.getCompetition().getYear());
             preparedStatement.setDate(5, java.sql.Date.valueOf(match.getOccurrenceDate()));
             preparedStatement.setBoolean(6, match.isBlueWin());
-            preparedStatement.setString(7, match.getReplayLink());
+            if (match.getReplayLink() == null || match.getReplayLink().isEmpty()) {
+                preparedStatement.setNull(7, Types.NULL);
+            } else {
+                preparedStatement.setString(7, match.getReplayLink());
+            }
             preparedStatement.setString(8, match.getSummary());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new AddMatchException("Une erreur s'est produite lors de l'ajout du match");
+            throw new AddMatchException("Une erreur s'est produite lors de l'ajout du match" + e.getMessage());
         }
     }
     @Override
-    public Match getMatch(int matchId) throws ReadMatchException {
+    public Match getMatch(Integer matchId) throws ReadMatchException {
+        if (matchId == null) {
+            throw new ReadMatchException("L'ID du match ne peut pas être nul");
+        }
         try {
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(
                     "SELECT * FROM `match` WHERE id = ?");

@@ -15,19 +15,20 @@ public class MatchManager {
     }
     public void addMatch(Match match) throws AddMatchException {
         try {
-            if (getMatch(match.getId()) != null ){
-                throw new AddMatchException("L'équpe existe déjà");
-            }
+            if (match.getId() != null)
+                if (getMatch(match.getId()) != null ){
+                    throw new AddMatchException("L'équipe existe déjà");
+                }
         } catch (ReadMatchException e) {
-            throw new AddMatchException("Une erreur c'est produite");
+            throw new AddMatchException("Une erreur c'est produite" + e.getMessage());
         }
         dao.addMatch(match);
     }
-    public Match getMatch(int matchId) throws ReadMatchException {
+    public Match getMatch(Integer matchId) throws ReadMatchException {
         try {
             return dao.getMatch(matchId);
         } catch (ReadMatchException e) {
-            throw new ReadMatchException("Une erreur s'est produite lors de la lecture du match");
+            throw new ReadMatchException("Une erreur s'est produite lors de la lecture du match" + e.getMessage());
         }
     }
 

@@ -117,6 +117,19 @@ public class ModificationMatchPanel extends JPanel implements Panel {
         gridBag.setConstraints(winnerCheckBox, c);
         formPanel.add(winnerCheckBox);
 
+        JLabel summaryLabel = new JLabel("Match Summary: ");
+        c.gridwidth = GridBagConstraints.RELATIVE;
+        gridBag.setConstraints(summaryLabel, c);
+        formPanel.add(summaryLabel);
+        JTextArea summaryTextArea = new JTextArea(5, 20);
+        summaryTextArea.setText(selectedMatch.getSummary());
+        summaryTextArea.setLineWrap(true);
+        summaryTextArea.setWrapStyleWord(true);
+        JScrollPane summaryScrollPane = new JScrollPane(summaryTextArea);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        gridBag.setConstraints(summaryScrollPane, c);
+        formPanel.add(summaryScrollPane);
+
 
         this.add(formPanel, BorderLayout.NORTH);
 
@@ -128,6 +141,7 @@ public class ModificationMatchPanel extends JPanel implements Panel {
             Competition competitionComboBoxText = (Competition) competitionComboBox.getSelectedItem();
             Date occurrenceDate = (Date) occurrenceDateSpinner.getValue();
             String replayLinkText = replayLinkTextField.getText();
+            String summaryText = summaryTextArea.getText();
             boolean isBlueWin = winnerCheckBox.isSelected();
             if (teamRedComboBoxText == null || teamBlueComboBoxText == null || competitionComboBoxText == null || occurrenceDate == null) {
                 JOptionPane.showMessageDialog(this, "Please fill all required fields.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -144,6 +158,7 @@ public class ModificationMatchPanel extends JPanel implements Panel {
             this.selectedMatch.setOccurrenceDate(occurrenceDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             this.selectedMatch.setReplayLink(replayLinkText);
             this.selectedMatch.setBlueWin(isBlueWin);
+            this.selectedMatch.setSummary(summaryText);
             try {
                 this.matchController.updateMatch(this.selectedMatch);
                 JOptionPane.showMessageDialog(this, "Match updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
