@@ -33,7 +33,7 @@ public class PlayerRankingForMatchDBAccess implements PlayerRankingForMatchDataA
                 allPlayerForTheGame.add(resultSetToParticipation(resultSet));
             }
         } catch (SQLException e) {
-            throw new ReadPlayerRankingForMatchException("Une erreur s'est produite lors de la lecture des participation des joueurs pour le match" + e.getMessage());
+            throw new ReadPlayerRankingForMatchException("An error occurred while reading the player participation data");
         }
         return allPlayerForTheGame;
     }
@@ -58,8 +58,7 @@ public class PlayerRankingForMatchDBAccess implements PlayerRankingForMatchDataA
                     resultSet.getInt("damage_received")
             );
         } catch (SQLException | ReadPlayerException | ReadMatchException | ReadChampionException e) {
-            System.out.println("Erreur lors de la lecture de la participation du joueur : " + e.getMessage());
-            throw new ReadPlayerRankingForMatchException("Une erreur s'est produite lors de la lecture de la participation du joueur" + e.getMessage());
+            throw new ReadPlayerRankingForMatchException("An error occurred while reading the player participation data");
         }
     }
 

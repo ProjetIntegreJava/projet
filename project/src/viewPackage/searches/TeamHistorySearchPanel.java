@@ -104,7 +104,7 @@ public class TeamHistorySearchPanel extends JPanel implements Panel {
                     }
                     resultTable.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Error fetching matches: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Error fetching matches", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Please select both a champion and a competition.", "Input Error", JOptionPane.WARNING_MESSAGE);

@@ -33,7 +33,7 @@ public class MatchDBAccess implements MatchDataAccess{
             preparedStatement.setString(8, match.getSummary());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new AddMatchException("Une erreur s'est produite lors de l'ajout du match" + e.getMessage());
+            throw new AddMatchException("An error occurred while reading the match");
         }
     }
     @Override
@@ -50,14 +50,14 @@ public class MatchDBAccess implements MatchDataAccess{
             if (resultSet.next()) {
                 return resultSetToMatch(resultSet);
             } else {
-                throw new ReadMatchException("Aucun match trouvé");
+                throw new ReadMatchException("No match found with the id: " + matchId);
             }
         } catch (SQLException e) {
-            throw new ReadMatchException("Une erreur s'est produite lors de la lecture du match" + e.getMessage());
+            throw new ReadMatchException("An error occurred while reading the match" );
         } catch (ReadTeamException e) {
-            throw new ReadMatchException("Erreur lors de la lecture de l'équipe");
+            throw new ReadMatchException("An error occurred while reading the team");
         } catch (ReadCompetitionException e) {
-            throw new ReadMatchException("Erreur lors de la lecture de la compétition");
+            throw new ReadMatchException("An error occurred while reading the competition");
         }
     }
 
@@ -82,10 +82,10 @@ public class MatchDBAccess implements MatchDataAccess{
 
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected == 0) {
-                throw new UpdateMatchException("Aucun match trouvé avec l'ID : " + match.getId());
+                throw new UpdateMatchException("No match found with the id: " + match.getId());
             }
         } catch (SQLException e) {
-            throw new UpdateMatchException("Une erreur s'est produite lors de la mise à jour du match" + e.getMessage());
+            throw new UpdateMatchException("An error occurred while updating the match" );
         }
     }
 
@@ -97,10 +97,10 @@ public class MatchDBAccess implements MatchDataAccess{
             preparedStatement.setInt(1, matchId);
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected == 0) {
-                throw new DeleteMatchException("Aucun match trouvé avec l'ID : " + matchId);
+                throw new DeleteMatchException("No match found with the id: " + matchId);
             }
         } catch (SQLException e) {
-            throw new DeleteMatchException("Une erreur s'est produite lors de la suppression du match");
+            throw new DeleteMatchException("An error occurred while deleting the match");
         }
     }
 
@@ -138,7 +138,7 @@ public class MatchDBAccess implements MatchDataAccess{
                 matches.add(match);
             }
         } catch (SQLException e) {
-            throw new ReadMatchException("Une erreur s'est produite lors de la lecture des matchs");
+            throw new ReadMatchException("An error occurred while reading the matchs");
         }
         // Implementation for getting all matches from the database
         return matches; // Placeholder return
@@ -160,11 +160,11 @@ public class MatchDBAccess implements MatchDataAccess{
                     resultSet.getString("summary")
             );
         } catch (SQLException e) {
-            throw new ReadMatchException("Une erreur s'est produite lors de la lecture du match" + e.getMessage());
+            throw new ReadMatchException("An error occurred while reading the match" );
         } catch (ReadTeamException e) {
             throw new ReadTeamException("Erreur lors de la lecture de l'équipe");
         } catch (ReadCompetitionException e) {
-            throw new ReadCompetitionException("Erreur lors de la lecture de la compétition");
+            throw new ReadCompetitionException("An error occurred while reading the match");
         }
     }
 

@@ -17,10 +17,10 @@ public class MatchManager {
         try {
             if (match.getId() != null)
                 if (getMatch(match.getId()) != null ){
-                    throw new AddMatchException("L'équipe existe déjà");
+                    throw new AddMatchException("The match already exists");
                 }
         } catch (ReadMatchException e) {
-            throw new AddMatchException("Une erreur c'est produite");
+            throw new AddMatchException("An error occurred while reading the match");
         }
         dao.addMatch(match);
     }
@@ -28,27 +28,27 @@ public class MatchManager {
         try {
             return dao.getMatch(matchId);
         } catch (ReadMatchException e) {
-            throw new ReadMatchException("Une erreur s'est produite lors de la lecture du match");
+            throw new ReadMatchException("An error occurred while reading the match");
         }
     }
 
     public void updateMatch(Match match) throws UpdateMatchException {
         try {
             if (getMatch(match.getId()) == null) {
-                throw new UpdateMatchException("Match inexistant");
+                throw new UpdateMatchException("The match does not exist");
             }
         } catch (ReadMatchException e) {
-            throw new UpdateMatchException("Une erreur s'est produite");
+            throw new UpdateMatchException("An error occurred while reading the match");
         }
         dao.updateMatch(match);
     }
     public void deleteMatch(Integer matchId) throws DeleteMatchException {
         try {
             if (getMatch(matchId) == null) {
-                throw new DeleteMatchException("Équipe inexistante");
+                throw new DeleteMatchException("The match does not exist");
             }
         } catch (ReadMatchException e) {
-            throw new DeleteMatchException("Une erreur s'est produite");
+            throw new DeleteMatchException("An error occurred while reading the match");
         }
         dao.deleteMatch(matchId);
     }

@@ -25,7 +25,7 @@ public class PlayerDBAccess implements PlayerDataAccess {
                 throw new ReadPlayerException("Aucun match trouvé");
             }
         } catch (SQLException e) {
-            throw new ReadPlayerException("Une erreur s'est produite lors de la lecture du joueur");
+            throw new ReadPlayerException("An error occurred while reading the match");
         }
     }
 
@@ -40,7 +40,7 @@ public class PlayerDBAccess implements PlayerDataAccess {
                     resultSet.getString("nationality")
             );
         } catch (SQLException e) {
-            throw new ReadPlayerException("Une erreur s'est produite lors de la lecture du joueur");
+            throw new ReadPlayerException("An error occurred while reading the match");
         }
     }
 }

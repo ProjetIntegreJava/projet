@@ -11,6 +11,10 @@ import modelPackage.TeamHistory;
 
 import java.util.ArrayList;
 
+
+/**
+ * Cette classe n'est pas à prendre en compte. Elle est incomplète pour l'instant.
+ */
 public class AkinatorManager {
     private ArrayList<Team> teams;
     private AkinatorDataAccess daoTeamHistory;
@@ -31,9 +35,9 @@ public class AkinatorManager {
     }
     public int getNextQuestion(Boolean answer){
         if (answer){
-            return 1; // Assuming 1 is the next question ID for a "yes" answer
+            return 1;
         } else {
-            return 2; // Assuming 2 is the next question ID for a "no" answer
+            return 2;
         }
 
     }

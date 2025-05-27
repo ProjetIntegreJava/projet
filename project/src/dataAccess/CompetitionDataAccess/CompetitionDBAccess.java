@@ -27,13 +27,13 @@ public class CompetitionDBAccess implements CompetitionDataAccess{
                 try {
                     return resultSetToCompetition(resultSet);
                 } catch (ReadCompetitionException e) {
-                    throw new ReadCompetitionException("Erreur lors de la lecture de l'équipe");
+                    throw new ReadCompetitionException("Error while reading competition data");
                 }
             } else {
-                throw new ReadCompetitionException("Équipe non trouvée");
+                throw new ReadCompetitionException("The competition with name " + name + " and year " + year + " does not exist.");
             }
         } catch (SQLException e) {
-            throw new ReadCompetitionException("Une erreur s'est produite lors de la lecture de l'équipe: " + e.getMessage());
+            throw new ReadCompetitionException("An error occurred while reading the competition");
         }
     }
     @Override
@@ -46,7 +46,7 @@ public class CompetitionDBAccess implements CompetitionDataAccess{
                 competitions.add(resultSetToCompetition(resultSet));
             }
         } catch (SQLException e) {
-            throw new ReadCompetitionException("Une erreur s'est produite lors de la lecture des compétitions");
+            throw new ReadCompetitionException("An error occurred while reading the competition");
         }
         return competitions;
     }
@@ -59,7 +59,7 @@ public class CompetitionDBAccess implements CompetitionDataAccess{
             new CompetitionLevel("level")
             );
         } catch (SQLException e) {
-            throw new ReadCompetitionException("Une erreur s'est produite lors de la lecture de la compétition");
+            throw new ReadCompetitionException("An error occurred while reading the competition");
         }
     }
 

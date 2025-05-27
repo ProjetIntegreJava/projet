@@ -34,7 +34,7 @@ public class TeamDBAccess implements TeamDataAccess{
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new AddTeamException("Une erreur s'est produite lors de l'ajout de l'équipe");
+            throw new AddTeamException("An error occurred while adding a player");
         }
     }
 
@@ -63,13 +63,13 @@ public class TeamDBAccess implements TeamDataAccess{
                 try {
                     return resultSetToTeam(resultSet);
                 } catch (ReadTeamException e) {
-                    throw new ReadTeamException("Erreur lors de la lecture de l'équipe");
+                    throw new ReadTeamException("An error occurred while deleting the player data");
                 }
             } else {
-                throw new ReadTeamException("Équipe non trouvée");
+                throw new ReadTeamException("Team not found: " + nameTeam);
             }
         } catch (SQLException e) {
-            throw new ReadTeamException("Une erreur s'est produite lors de la lecture de l'équipe: " + e.getMessage());
+            throw new ReadTeamException("An error occurred while reading the player data");
         }
     }
 
@@ -104,10 +104,10 @@ public class TeamDBAccess implements TeamDataAccess{
             preparedStatement.setString(1, nameTeam);
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected == 0) {
-                throw new DeleteTeamsException("Aucune équipe supprimée pour le nom: " + nameTeam);
+                throw new DeleteTeamsException("No team found with the name: " + nameTeam);
             }
         } catch (SQLException e) {
-            throw new DeleteTeamsException("Une erreur s'est produite lors de la suppression de l'équipe" + e.getMessage());
+            throw new DeleteTeamsException("An error occurred while deleting the player data");
         }
     }
 
@@ -136,11 +136,11 @@ public class TeamDBAccess implements TeamDataAccess{
                 try {
                     teams.add(resultSetToTeam(resultSet));
                 } catch (ReadTeamException e) {
-                    throw new ReadTeamException("Erreur lors de la lecture d'une équipe");
+                    throw new ReadTeamException("An error occurred while reading the player data");
                 }
             }
         } catch (SQLException e) {
-            throw new ReadTeamException("Une erreur s'est produite lors de la lecture des équipes: " + e.getMessage());
+            throw new ReadTeamException("An error occurred while reading the player data");
         }
         return teams;
     }
@@ -157,7 +157,7 @@ public class TeamDBAccess implements TeamDataAccess{
                     resultSet.getInt("nb_followers")
             );
         }catch (SQLException e){
-            throw new ReadTeamException("Erreur lors de la lecture d'un compte");
+            throw new ReadTeamException("An error occurred while deleting the player");
         }
     }
 }

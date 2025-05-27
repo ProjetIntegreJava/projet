@@ -109,7 +109,7 @@ public class SearchDBAccess implements SearchDataAccess {
                 resultTeamHistoryData.add(participationData);
             }
         } catch (SQLException e) {
-            throw new SearchDataAccessException("Error while searching participation data" + e.getMessage());
+            throw new SearchDataAccessException("Error while searching participation data");
         }
         return resultTeamHistoryData;
     }

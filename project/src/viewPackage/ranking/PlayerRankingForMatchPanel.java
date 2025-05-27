@@ -74,7 +74,7 @@ public class PlayerRankingForMatchPanel extends JPanel implements Panel {
                     }
                     rankingTable.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
                 } catch (ReadPlayerRankingForMatchException ex) {
-                    JOptionPane.showMessageDialog(this, "Erreur lors de la récupération du classement : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erreur lors de la récupération du classement", "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Veuillez sélectionner un match.", "Erreur", JOptionPane.WARNING_MESSAGE);

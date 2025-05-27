@@ -22,9 +22,9 @@ public class ClubDBAccess implements ClubDataAccess {
             if (resultSet.next()) {
                 return resultSetToClub(resultSet);
             }
-            throw new ReadClubException("Aucun club trouvé avec le nom : " + nameClub);
+            throw new ReadClubException("No club found with the name: " + nameClub);
         } catch (SQLException e) {
-            throw new ReadClubException("Une erreur s'est produite lors de la lecture du club");
+            throw new ReadClubException("An error occurred while reading the clubs");
         }
     }
     @Override
@@ -39,10 +39,10 @@ public class ClubDBAccess implements ClubDataAccess {
                 clubs.add(resultSetToClub(resultSet));
             }
             if (clubs.isEmpty()) {
-                throw new ReadClubException("Aucun club trouvé");
+                throw new ReadClubException("The club list is empty");
             }
         } catch (SQLException e) {
-            throw new ReadClubException("Une erreur s'est produite lors de la lecture des clubs");
+            throw new ReadClubException("An error occurred while reading the clubs");
         }
         return clubs;
     }
@@ -57,7 +57,7 @@ public class ClubDBAccess implements ClubDataAccess {
             preparedStatement.setString(3, club.getCEO());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new AddClubException("Une erreur s'est produite lors de l'ajout du club");
+            throw new AddClubException("An error occurred while reading the clubs");
         }
     }
 
@@ -69,7 +69,7 @@ public class ClubDBAccess implements ClubDataAccess {
                     resultSet.getString("nationality")
             );
         } catch (SQLException e) {
-            throw new ReadClubException("Une erreur s'est produite lors de la conversion du résultat en club");
+            throw new ReadClubException("An error occurred while converting data");
         }
     }
 

@@ -147,7 +147,7 @@ public class NewMatchPanel extends JPanel implements Panel {
                         summaryText
                 ));
             } catch (AddMatchException ex) {
-                JOptionPane.showMessageDialog(this, "Error adding match: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error adding match", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 

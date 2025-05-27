@@ -29,20 +29,20 @@ public class TeamManager {
     public void updateTeam(String name, Team team) throws UpdateTeamException {
         try {
             if (getTeam(name) == null) {
-                throw new UpdateTeamException("Équipe inexistant");
+                throw new UpdateTeamException("The team does not exist");
             }
         } catch (ReadTeamException e) {
-            throw new UpdateTeamException("Une erreur s'est produite");
+            throw new UpdateTeamException("An error occurred while reading the teams");
         }
         dao.updateTeam(name, team);
     }
     public void deleteTeam(String nameTeam) throws DeleteTeamsException {
         try {
             if (getTeam(nameTeam) == null) {
-                throw new DeleteTeamsException("Équipe inexistante");
+                throw new DeleteTeamsException("The team does not exist");
             }
         } catch (ReadTeamException e) {
-            throw new DeleteTeamsException("Une erreur s'est produite");
+            throw new DeleteTeamsException("An error occurred while reading the teams");
         }
         dao.deleteTeam(nameTeam);
     }
