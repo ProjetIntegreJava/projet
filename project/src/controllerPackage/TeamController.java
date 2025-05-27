@@ -17,8 +17,8 @@ public class TeamController {
     public void updateTeam(String name, Team team) throws UpdateTeamException{
         teamManager.updateTeam(name, team);
     }
-    public void deleteTeams(ArrayList<String> nameTeam) throws DeleteTeamsException{
-        teamManager.deleteTeams(nameTeam);
+    public void deleteTeam(String nameTeam) throws DeleteTeamsException{
+        teamManager.deleteTeam(nameTeam);
     }
     public Team getTeam(String name) throws ReadTeamException{
         return teamManager.getTeam(name);

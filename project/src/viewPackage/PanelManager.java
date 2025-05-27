@@ -117,7 +117,7 @@ public class PanelManager extends JPanel {
                 }
                 case "NewTeamPanel" -> {
                     this.left.add(this.infoLabel);
-                    yield new NewTeamPanel();
+                    yield new NewTeamPanel(this, true);
                 }
                 case "TeamPanel" -> {
                     this.left.add(this.infoLabel);
@@ -148,6 +148,10 @@ public class PanelManager extends JPanel {
                 case "ModificationTeamPanel" -> {
                     this.left.add(this.infoLabel);
                     yield new ModificationTeamPanel((Team) data, this);
+                }
+                case "NewTeamPanel" -> {
+                    this.left.add(this.infoLabel);
+                    yield new NewTeamPanel(this, (Boolean) data);
                 }
                 default -> new HomePanel();
             };

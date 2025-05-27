@@ -7,27 +7,57 @@ import modelPackage.Club;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-public class ClubDBAccess implements ClubDataAccess{
+public class ClubDBAccess implements ClubDataAccess {
     public ClubDBAccess() { }
     @Override
     public Club getClub(String nameClub) throws ReadClubException {
         try {
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(
-                    "SELECT * FROM Club WHERE name = ?");
+                    "SELECT * FROM club WHERE name = ?");
             preparedStatement.setString(1, nameClub);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                try {
-                    return resultSetToClub(resultSet);
-                } catch (ReadClubException e) {
-                    e.printStackTrace();
-                }
+                return resultSetToClub(resultSet);
             }
-            return null;
-        }catch (SQLException e) {
+            throw new ReadClubException("Aucun club trouvé avec le nom : " + nameClub);
+        } catch (SQLException e) {
             throw new ReadClubException("Une erreur s'est produite lors de la lecture du club");
+        }
+    }
+    @Override
+    public ArrayList<Club> getClubs() throws ReadClubException {
+        ArrayList<Club> clubs = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(
+                    "SELECT * FROM club");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                clubs.add(resultSetToClub(resultSet));
+            }
+            if (clubs.isEmpty()) {
+                throw new ReadClubException("Aucun club trouvé");
+            }
+        } catch (SQLException e) {
+            throw new ReadClubException("Une erreur s'est produite lors de la lecture des clubs");
+        }
+        return clubs;
+    }
+
+    @Override
+    public void addClub(Club club) throws AddClubException {
+        try {
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(
+                    "INSERT INTO club(name, nationality, ceo) VALUES (?, ?, ?)");
+            preparedStatement.setString(1, club.getName());
+            preparedStatement.setString(2, club.getNationality());
+            preparedStatement.setString(3, club.getCEO());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new AddClubException("Une erreur s'est produite lors de l'ajout du club");
         }
     }
 

@@ -10,6 +10,6 @@ public interface TeamDataAccess {
     Team getTeam(String nameTeam) throws ReadTeamException;
     void updateTeam(String name, Team team) throws UpdateTeamException;
 
-    void deleteTeams(ArrayList<String> nameTeam) throws DeleteTeamsException;
+    void deleteTeam(String nameTeam) throws DeleteTeamsException;
     ArrayList<Team> getAllTeams() throws ReadTeamException;
 }

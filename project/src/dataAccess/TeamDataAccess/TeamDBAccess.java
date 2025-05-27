@@ -97,20 +97,17 @@ public class TeamDBAccess implements TeamDataAccess{
     }
 
     @Override
-    public void deleteTeams(ArrayList<String> nameTeam) throws DeleteTeamsException {
+    public void deleteTeam(String nameTeam) throws DeleteTeamsException {
         try {
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(
-                    "DELETE FROM team WHERE name = ?");
-            for (String name : nameTeam) {
-                preparedStatement.setString(1, name);
-                preparedStatement.executeUpdate();
-                int rowsAffected = preparedStatement.executeUpdate();
-                if (rowsAffected == 0) {
-                    throw new DeleteTeamsException("Aucune équipe supprimée pour le nom: " + name);
-                }
+                    "DELETE FROM team WHERE `name` = ?");
+            preparedStatement.setString(1, nameTeam);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new DeleteTeamsException("Aucune équipe supprimée pour le nom: " + nameTeam);
             }
         } catch (SQLException e) {
-            throw new DeleteTeamsException("Une erreur s'est produite lors de la suppression des équipes");
+            throw new DeleteTeamsException("Une erreur s'est produite lors de la suppression de l'équipe" + e.getMessage());
         }
     }
 
@@ -130,7 +127,7 @@ public class TeamDBAccess implements TeamDataAccess{
                                 c.name AS club_name,
                                 c.CEO,
                                 c.nationality
-                            FROM team 
+                            FROM team t
                             JOIN club c ON t.club = c.name;
                             """);
             ResultSet resultSet = preparedStatement.executeQuery();

@@ -7,7 +7,7 @@ import modelPackage.Team;
 import java.util.ArrayList;
 
 public class TeamManager {
-    private TeamDataAccess dao;
+    private final TeamDataAccess dao;
 
     public TeamManager() {
         this.dao = new TeamDBAccess();
@@ -16,19 +16,14 @@ public class TeamManager {
     public void addTeam(Team team) throws AddTeamException {
         try {
             if (getTeam(team.getName()) != null){
-                throw new AddTeamException("L'équpe existe déjà");
+                throw new AddTeamException("L'équipe existe déjà");
             }
         } catch (ReadTeamException e) {
-            throw new AddTeamException("Une erreur c'est produite");
+            dao.addTeam(team);
         }
-        dao.addTeam(team);
     }
     public Team getTeam(String name) throws ReadTeamException {
-        try {
-            return dao.getTeam(name);
-        } catch (ReadTeamException e) {
-            throw new ReadTeamException("Une erreur s'est produite lors de la lecture de l'équipe");
-        }
+        return dao.getTeam(name);
     }
 
     public void updateTeam(String name, Team team) throws UpdateTeamException {
@@ -41,19 +36,15 @@ public class TeamManager {
         }
         dao.updateTeam(name, team);
     }
-    public void deleteTeams(ArrayList<String> nameTeam) throws DeleteTeamsException {
-        ArrayList<String> nameTeamList = new ArrayList<>();
-        for (String name : nameTeam) {
-            try {
-                if (getTeam(name) == null) {
-                    throw new DeleteTeamsException("Équipe inexistant");
-                }
-                nameTeamList.add(name);
-            } catch (ReadTeamException e) {
-                throw new DeleteTeamsException("Une erreur s'est produite");
+    public void deleteTeam(String nameTeam) throws DeleteTeamsException {
+        try {
+            if (getTeam(nameTeam) == null) {
+                throw new DeleteTeamsException("Équipe inexistante");
             }
+        } catch (ReadTeamException e) {
+            throw new DeleteTeamsException("Une erreur s'est produite");
         }
-        dao.deleteTeams(nameTeamList);
+        dao.deleteTeam(nameTeam);
     }
 
     public ArrayList<Team> getAllTeams() throws ReadTeamException{

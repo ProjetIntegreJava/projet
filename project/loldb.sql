@@ -39,7 +39,7 @@ CREATE TABLE team (
     has_been_world_champion BOOLEAN NOT NULL,
     `description` TEXT NULL,
     nb_followers INT NULL,
-    FOREIGN KEY (club) REFERENCES club(`name`),
+    FOREIGN KEY (club) REFERENCES club(`name`) ON DELETE CASCADE,
     FOREIGN KEY (region) REFERENCES region(`name`)
 );
 
@@ -73,8 +73,8 @@ CREATE TABLE `match` (
     is_blue_win BOOLEAN NOT NULL,
     replay_link TEXT NULL,
     summary TEXT NULL,
-    FOREIGN KEY (team_blue) REFERENCES team(`name`) ON UPDATE CASCADE,
-    FOREIGN KEY (team_red) REFERENCES team(`name`) ON UPDATE CASCADE,
+    FOREIGN KEY (team_blue) REFERENCES team(`name`) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (team_red) REFERENCES team(`name`) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (competition_name, competition_year) REFERENCES competition(`name`, `year`),
     CONSTRAINT chk_link CHECK (replay_link LIKE 'https://youtu.be/%')
 );
@@ -94,7 +94,7 @@ CREATE TABLE participation (
     damage_received INT NOT NULL,
     PRIMARY KEY (id_player, id_match),
     FOREIGN KEY (id_player) REFERENCES player(id),
-    FOREIGN KEY (id_match) REFERENCES `match`(id),
+    FOREIGN KEY (id_match) REFERENCES `match`(id) ON DELETE CASCADE,
     FOREIGN KEY (role) REFERENCES role(`name`),
     FOREIGN KEY (champion) REFERENCES champion(`name`)
 );
@@ -105,8 +105,8 @@ CREATE TABLE bans (
     id_match INT NOT NULL,
     PRIMARY KEY (champion, team, id_match),
     FOREIGN KEY (champion) REFERENCES champion(`name`),
-    FOREIGN KEY (team) REFERENCES team(`name`) ON UPDATE CASCADE,
-    FOREIGN KEY (id_match) REFERENCES `match`(id)
+    FOREIGN KEY (team) REFERENCES team(`name`) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_match) REFERENCES `match`(id) ON DELETE CASCADE
 );
 
 CREATE TABLE team_history (
@@ -124,6 +124,6 @@ CREATE TABLE team_history (
     FOREIGN KEY (id_player_three) REFERENCES player(id),
     FOREIGN KEY (id_player_four) REFERENCES player(id),
     FOREIGN KEY (id_player_five) REFERENCES player(id),
-    FOREIGN KEY (team) REFERENCES team(`name`) ON UPDATE CASCADE,
+    FOREIGN KEY (team) REFERENCES team(`name`) ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT chk_date CHECK(beginning_date < ending_date)
 );

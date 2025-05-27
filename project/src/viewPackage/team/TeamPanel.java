@@ -52,7 +52,16 @@ public class TeamPanel extends JPanel implements Panel {
         JPanel buttonPanel = new JPanel();
         JButton addButton = new JButton("Add");
         addButton.addActionListener(e -> {
-            this.panelManager.changePanel("NewTeamPanel");
+            String[] options = new String[]{"Yes", "No"};
+            JPanel panel = new JPanel(new BorderLayout());
+            JLabel infoLabel = new JLabel("Does the team club already exists?");
+            panel.add(infoLabel);
+            int option = JOptionPane.showOptionDialog(null, panel,"Wait", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+            if (option == 0) {
+                this.panelManager.changePanel("NewTeamPanel", true);
+            } else if (option == 1) {
+                this.panelManager.changePanel("NewTeamPanel", false);
+            }
         });
         JButton modifyButton = new JButton("Modify");
         ArrayList<Team> finalTeams = this.allTeams;
@@ -68,14 +77,12 @@ public class TeamPanel extends JPanel implements Panel {
         JButton deleteButton = new JButton("Delete");
         deleteButton.addActionListener(e -> {
             if (teamTable.getSelectedRows() != null && teamTable.getSelectedRow() != -1) {
-                ArrayList<String> selectedTeams = this.allTeams.stream()
-                        .filter(team -> teamTable.getSelectedRow() == this.allTeams.indexOf(team))
-                        .map(Team::getName)
-                        .collect(Collectors.toCollection(ArrayList::new));
-                int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the teams: " + selectedTeams + "?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+                String selectedTeam = teamTable.getValueAt(teamTable.getSelectedRow(), 0).toString();
+                System.out.println("Selected team to delete: " + selectedTeam);
+                int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete: [" + selectedTeam + "]?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
                     try {
-                        teamController.deleteTeams(selectedTeams);
+                        teamController.deleteTeam(selectedTeam);
                         JOptionPane.showMessageDialog(this, "Team deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
                         this.panelManager.changePanel("TeamPanel");
                     } catch (Exception ex) {
@@ -90,5 +97,6 @@ public class TeamPanel extends JPanel implements Panel {
         this.add(buttonPanel, BorderLayout.SOUTH);
         buttonPanel.add(addButton);
         buttonPanel.add(modifyButton);
+        buttonPanel.add(deleteButton);
     }
 }
