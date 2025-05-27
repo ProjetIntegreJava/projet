@@ -20,7 +20,7 @@ public class MatchManager {
                     throw new AddMatchException("L'équipe existe déjà");
                 }
         } catch (ReadMatchException e) {
-            throw new AddMatchException("Une erreur c'est produite" + e.getMessage());
+            throw new AddMatchException("Une erreur c'est produite");
         }
         dao.addMatch(match);
     }
@@ -28,7 +28,7 @@ public class MatchManager {
         try {
             return dao.getMatch(matchId);
         } catch (ReadMatchException e) {
-            throw new ReadMatchException("Une erreur s'est produite lors de la lecture du match" + e.getMessage());
+            throw new ReadMatchException("Une erreur s'est produite lors de la lecture du match");
         }
     }
 
@@ -38,7 +38,7 @@ public class MatchManager {
                 throw new UpdateMatchException("Match inexistant");
             }
         } catch (ReadMatchException e) {
-            throw new UpdateMatchException("Une erreur s'est produite" + e.getMessage());
+            throw new UpdateMatchException("Une erreur s'est produite");
         }
         dao.updateMatch(match);
     }

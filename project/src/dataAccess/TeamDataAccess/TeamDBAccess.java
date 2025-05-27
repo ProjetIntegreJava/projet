@@ -62,7 +62,7 @@ public class TeamDBAccess implements TeamDataAccess{
             if (resultSet.next()) {
                 try {
                     return resultSetToTeam(resultSet);
-                } catch (ReadTeamException | ReadClubException e) {
+                } catch (ReadTeamException e) {
                     throw new ReadTeamException("Erreur lors de la lecture de l'équipe");
                 }
             } else {
@@ -135,7 +135,7 @@ public class TeamDBAccess implements TeamDataAccess{
             while (resultSet.next()) {
                 try {
                     teams.add(resultSetToTeam(resultSet));
-                } catch (ReadTeamException | ReadClubException e) {
+                } catch (ReadTeamException e) {
                     throw new ReadTeamException("Erreur lors de la lecture d'une équipe");
                 }
             }
@@ -144,7 +144,7 @@ public class TeamDBAccess implements TeamDataAccess{
         }
         return teams;
     }
-    private Team resultSetToTeam(ResultSet resultSet) throws ReadTeamException, ReadClubException {
+    private Team resultSetToTeam(ResultSet resultSet) throws ReadTeamException{
         try{
             return new Team(
                     resultSet.getString("name"),
