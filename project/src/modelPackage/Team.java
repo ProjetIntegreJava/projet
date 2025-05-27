@@ -33,13 +33,6 @@ public class Team {
     }
     public Team(String name) {
         this.name = name;
-        this.club = null;
-        this.region = null;
-        this.creationDate = null;
-        this.foundingDate = null;
-        this.hasBeenWorldChampion = null;
-        this.description = null;
-        this.nbFollower = null;
     }
 
     public String getName() {

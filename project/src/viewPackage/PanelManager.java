@@ -1,10 +1,11 @@
 package viewPackage;
 
 import controllerPackage.ConnectionController;
+import modelPackage.Match;
 import modelPackage.Team;
-import viewPackage.game.GamesPanel;
-import viewPackage.game.ModificationPanel;
-import viewPackage.game.NewGamePanel;
+import viewPackage.match.MatchPanel;
+import viewPackage.match.ModificationMatchPanel;
+import viewPackage.match.NewMatchPanel;
 import viewPackage.searches.MatchSearchPanel;
 import viewPackage.searches.ParticipationSearchPanel;
 import viewPackage.searches.TeamHistorySearchPanel;
@@ -95,14 +96,6 @@ public class PanelManager extends JPanel {
             this.center.removeAll();
             this.left.removeAll();
             Panel destinationPanel = switch (panelName) {
-                case "NewGamePanel" -> {
-                    this.left.add(this.infoLabel);
-                    yield new NewGamePanel(this);
-                }
-                case "ModificationPanel" -> {
-                    this.left.add(this.infoLabel);
-                    yield new ModificationPanel(this);
-                }
                 case "MatchSearchPanel" -> {
                     this.left.add(this.infoLabel);
                     yield new MatchSearchPanel();
@@ -123,7 +116,14 @@ public class PanelManager extends JPanel {
                     this.left.add(this.infoLabel);
                     yield new TeamPanel(this);
                 }
-                case "GamesPanel" -> new GamesPanel();
+                case "NewMatchPanel" -> {
+                    this.left.add(this.infoLabel);
+                    yield new NewMatchPanel(this);
+                }
+                case "MatchPanel" -> {
+                    this.left.add(this.infoLabel);
+                    yield new MatchPanel(this);
+                }
                 case "PlayerRankingForMatchPanel" -> {
                     this.left.add(this.infoLabel);
                     yield new PlayerRankingForMatchPanel();
@@ -152,6 +152,10 @@ public class PanelManager extends JPanel {
                 case "NewTeamPanel" -> {
                     this.left.add(this.infoLabel);
                     yield new NewTeamPanel(this, (Boolean) data);
+                }
+                case "ModificationMatchPanel" -> {
+                    this.left.add(this.infoLabel);
+                    yield new ModificationMatchPanel((Match) data, this);
                 }
                 default -> new HomePanel();
             };

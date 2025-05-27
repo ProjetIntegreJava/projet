@@ -37,23 +37,19 @@ public class MatchManager {
                 throw new UpdateMatchException("Match inexistant");
             }
         } catch (ReadMatchException e) {
-            throw new UpdateMatchException("Une erreur s'est produite");
+            throw new UpdateMatchException("Une erreur s'est produite" + e.getMessage());
         }
         dao.updateMatch(match);
     }
-    public void deleteMatches(ArrayList<Integer> matchId) throws DeleteMatchException {
-        ArrayList<Integer> idMatchList = new ArrayList<Integer>();
-        for (int id : matchId) {
-            try {
-                if (getMatch(id) == null) {
-                    throw new DeleteMatchException("Équipe inexistant");
-                }
-                idMatchList.add(id);
-            } catch (ReadMatchException e) {
-                throw new DeleteMatchException("Une erreur s'est produite");
+    public void deleteMatch(Integer matchId) throws DeleteMatchException {
+        try {
+            if (getMatch(matchId) == null) {
+                throw new DeleteMatchException("Équipe inexistante");
             }
+        } catch (ReadMatchException e) {
+            throw new DeleteMatchException("Une erreur s'est produite");
         }
-        dao.deleteMatchs(idMatchList);
+        dao.deleteMatch(matchId);
     }
 
     public ArrayList<Match> getAllMatches() throws ReadMatchException{

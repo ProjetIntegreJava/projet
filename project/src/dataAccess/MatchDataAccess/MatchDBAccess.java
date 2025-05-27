@@ -9,9 +9,7 @@ import exceptionPackage.Team.ReadTeamException;
 import modelPackage.Match;
 import modelPackage.Team;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -48,7 +46,7 @@ public class MatchDBAccess implements MatchDataAccess{
                 throw new ReadMatchException("Aucun match trouvé");
             }
         } catch (SQLException e) {
-            throw new ReadMatchException("Une erreur s'est produite lors de la lecture du match");
+            throw new ReadMatchException("Une erreur s'est produite lors de la lecture du match" + e.getMessage());
         } catch (ReadTeamException e) {
             throw new ReadMatchException("Erreur lors de la lecture de l'équipe");
         } catch (ReadCompetitionException e) {
@@ -56,16 +54,47 @@ public class MatchDBAccess implements MatchDataAccess{
         }
     }
 
-
-
     @Override
     public void updateMatch(Match match) throws UpdateMatchException {
-        // Implementation for updating a match in the database
+        try {
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(
+                    "UPDATE `match` SET team_blue = ?, team_red = ?, competition_name = ?, competition_year = ?, occurrence_date = ?, is_blue_win = ?, replay_link = ?, summary = ? WHERE id = ?");
+            preparedStatement.setString(1, match.getTeamBlue().getName());
+            preparedStatement.setString(2, match.getTeamRed().getName());
+            preparedStatement.setString(3, match.getCompetition().getName());
+            preparedStatement.setInt(4, match.getCompetition().getYear());
+            preparedStatement.setDate(5, java.sql.Date.valueOf(match.getOccurrenceDate()));
+            preparedStatement.setBoolean(6, match.isBlueWin());
+            if (match.getReplayLink() == null || match.getReplayLink().isEmpty()) {
+                preparedStatement.setNull(7, Types.NULL);
+            } else {
+                preparedStatement.setString(7, match.getReplayLink());
+            }
+            preparedStatement.setString(8, match.getSummary());
+            preparedStatement.setInt(9, match.getId());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new UpdateMatchException("Aucun match trouvé avec l'ID : " + match.getId());
+            }
+        } catch (SQLException e) {
+            throw new UpdateMatchException("Une erreur s'est produite lors de la mise à jour du match" + e.getMessage());
+        }
     }
 
     @Override
-    public void deleteMatchs(ArrayList<Integer> matchId) throws DeleteMatchException {
-        // Implementation for deleting matches from the database
+    public void deleteMatch(Integer matchId) throws DeleteMatchException {
+        try {
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(
+                    "DELETE FROM `match` WHERE id = ?");
+            preparedStatement.setInt(1, matchId);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new DeleteMatchException("Aucun match trouvé avec l'ID : " + matchId);
+            }
+        } catch (SQLException e) {
+            throw new DeleteMatchException("Une erreur s'est produite lors de la suppression du match");
+        }
     }
 
     @Override
@@ -73,24 +102,31 @@ public class MatchDBAccess implements MatchDataAccess{
         ArrayList<Match> matches = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(
-                    "SELECT `match`.occurrence_date, `match`.id, `match`.team_blue, `match`.team_red FROM `match`"
+                    "SELECT * FROM `match`"
             );
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String teamBlueName = resultSet.getString("team_blue");
                 String teamRedName = resultSet.getString("team_red");
                 int matchID = resultSet.getInt("id");
+                LocalDate creationDate = resultSet.getDate("creation_date").toLocalDate();
                 LocalDate occurrenceDate = resultSet.getDate("occurrence_date").toLocalDate();
+                String competitionName = resultSet.getString("competition_name");
+                int competitionYear = resultSet.getInt("competition_year");
+                boolean isBlueWin = resultSet.getBoolean("is_blue_win");
+                String replayLink = resultSet.getString("replay_link");
+                String summary = resultSet.getString("summary");
                 Match match = new Match(
                         matchID,
-                        new Team(teamBlueName),
-                        new Team(teamRedName),
-                        null, // Competition will be set later
-                        null, // Creation date will be set later
+                        teamBlueName,
+                        teamRedName,
+                        competitionName,
+                        competitionYear,
+                        creationDate,
                         occurrenceDate,
-                        false, // isBlueWin will be set later
-                        null, // replayLink will be set later
-                        null  // summary will be set later
+                        isBlueWin,
+                        replayLink,
+                        summary
                 );
                 matches.add(match);
             }
@@ -111,13 +147,13 @@ public class MatchDBAccess implements MatchDataAccess{
                     teamDBAccess.getTeam(resultSet.getString("team_red")),
                     competitionDBAccess.getCompetition(resultSet.getString("competition_name"), resultSet.getInt("competition_year")),
                     resultSet.getDate("creation_date").toLocalDate(),
-                    resultSet.getDate("occurence_date").toLocalDate(),
+                    resultSet.getDate("occurrence_date").toLocalDate(),
                     resultSet.getBoolean("is_blue_win"),
                     resultSet.getString("replay_link"),
                     resultSet.getString("summary")
             );
         } catch (SQLException e) {
-            throw new ReadMatchException("Une erreur s'est produite lors de la lecture du match");
+            throw new ReadMatchException("Une erreur s'est produite lors de la lecture du match" + e.getMessage());
         } catch (ReadTeamException e) {
             throw new ReadTeamException("Erreur lors de la lecture de l'équipe");
         } catch (ReadCompetitionException e) {

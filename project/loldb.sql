@@ -75,8 +75,7 @@ CREATE TABLE `match` (
     summary TEXT NULL,
     FOREIGN KEY (team_blue) REFERENCES team(`name`) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (team_red) REFERENCES team(`name`) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (competition_name, competition_year) REFERENCES competition(`name`, `year`),
-    CONSTRAINT chk_link CHECK (replay_link LIKE 'https://youtu.be/%')
+    FOREIGN KEY (competition_name, competition_year) REFERENCES competition(`name`, `year`)
 );
 
 CREATE TABLE participation (

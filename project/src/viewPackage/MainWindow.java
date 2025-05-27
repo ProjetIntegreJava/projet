@@ -54,6 +54,15 @@ public class MainWindow extends JFrame {
         teamMenu.add(teamsMenuItem);
         teamsMenuItem.addActionListener(e -> panelManager.changePanel("TeamPanel"));
 
+        JMenu matchMenu = new JMenu("Match");
+        menuBar.add(matchMenu);
+        JMenuItem createMatchMenu = new JMenuItem("Create a Match");
+        matchMenu.add(createMatchMenu);
+        createMatchMenu.addActionListener(e -> panelManager.changePanel("NewMatchPanel"));
+        JMenuItem matchesMenuItem = new JMenuItem("Matches");
+        matchMenu.add(matchesMenuItem);
+        matchesMenuItem.addActionListener(e -> panelManager.changePanel("MatchPanel"));
+
         JMenu searchMenu = new JMenu("Searches");
         menuBar.add(searchMenu);
         JMenuItem matchDataMenuItem = new JMenuItem("Get Match Data");

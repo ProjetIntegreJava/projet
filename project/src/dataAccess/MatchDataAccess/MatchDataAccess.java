@@ -12,7 +12,7 @@ public interface MatchDataAccess {
 
     void updateMatch(Match match) throws UpdateMatchException;
 
-    void deleteMatchs(ArrayList<Integer> matchId) throws DeleteMatchException;
+    void deleteMatch(Integer matchId) throws DeleteMatchException;
 
     ArrayList<Match> getAllMatchs() throws ReadMatchException;
 }

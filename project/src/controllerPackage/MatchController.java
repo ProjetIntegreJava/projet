@@ -24,8 +24,8 @@ public class MatchController {
     public void updateMatch(Match match) throws UpdateMatchException {
         matchManager.updateMatch(match);
     }
-    public void deleteMatches(ArrayList<Integer> matchId) throws DeleteMatchException {
-        matchManager.deleteMatches(matchId);
+    public void deleteMatch(Integer matchId) throws DeleteMatchException {
+        matchManager.deleteMatch(matchId);
     }
     public ArrayList<Match> getAllMatches() throws ReadMatchException{
         return matchManager.getAllMatches();
