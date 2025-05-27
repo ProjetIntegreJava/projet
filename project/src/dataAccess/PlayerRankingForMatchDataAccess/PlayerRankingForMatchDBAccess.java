@@ -1,8 +1,13 @@
 package dataAccess.PlayerRankingForMatchDataAccess;
 
 import dataAccess.MatchDataAccess.MatchDBAccess;
+import dataAccess.MatchDataAccess.MatchDataAccess;
 import dataAccess.PlayerDataAccess.PlayerDBAccess;
+import dataAccess.PlayerDataAccess.PlayerDataAccess;
 import dataAccess.SingletonConnection;
+import dataAccess.championDataAccess.ChampionDBAccess;
+import dataAccess.championDataAccess.ChampionDataAccess;
+import exceptionPackage.Champion.ReadChampionException;
 import exceptionPackage.Match.ReadMatchException;
 import exceptionPackage.Player.ReadPlayerException;
 import exceptionPackage.PlayerRankingForMatch.ReadPlayerRankingForMatchException;
@@ -35,14 +40,15 @@ public class PlayerRankingForMatchDBAccess implements PlayerRankingForMatchDataA
     }
 
     private Participation resultSetToParticipation(ResultSet resultSet) throws ReadPlayerRankingForMatchException {
-        PlayerDBAccess playerDBAccess = new PlayerDBAccess();
-        MatchDBAccess matchDBAccess = new MatchDBAccess();
+        PlayerDataAccess playerDataAccess = new PlayerDBAccess();
+        MatchDataAccess matchDataAccess = new MatchDBAccess();
+        ChampionDataAccess championDataAccess = new ChampionDBAccess();
         try {
             return new Participation(
-                    playerDBAccess.getPlayerById(resultSet.getInt("player_id")),
-                    matchDBAccess.getMatch(resultSet.getInt("match_id")),
+                    playerDataAccess.getPlayerById(resultSet.getInt("player_id")),
+                    matchDataAccess.getMatch(resultSet.getInt("match_id")),
                     new Role(resultSet.getString("role")),
-                    new Champion(resultSet.getString("champion")),
+                    championDataAccess.getChampionByName(resultSet.getString("champion")),
                     resultSet.getInt("kills"),
                     resultSet.getInt("assists"),
                     resultSet.getInt("deaths"),
@@ -52,7 +58,7 @@ public class PlayerRankingForMatchDBAccess implements PlayerRankingForMatchDataA
                     resultSet.getInt("gold_earned"),
                     resultSet.getInt("damage_received")
             );
-        } catch (SQLException | ReadPlayerException | ReadMatchException e) {
+        } catch (SQLException | ReadPlayerException | ReadMatchException | ReadChampionException e) {
             throw new ReadPlayerRankingForMatchException("Une erreur s'est produite lors de la lecture de la participation du joueur");
         }
     }

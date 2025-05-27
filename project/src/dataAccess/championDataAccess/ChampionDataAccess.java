@@ -7,4 +7,5 @@ import java.util.ArrayList;
 
 public interface ChampionDataAccess {
     ArrayList<Champion> getAllChampions() throws ReadChampionException;
+    Champion getChampionByName(String nameChampion) throws ReadChampionException;
 }

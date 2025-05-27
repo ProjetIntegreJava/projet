@@ -12,7 +12,5 @@ public class Champion {
     public String getRace() {
         return this.race;
     }
-    public String getName() {
-        return name;
-    }
+
 }

@@ -5,7 +5,6 @@ import modelPackage.Team;
 import viewPackage.game.GamesPanel;
 import viewPackage.game.ModificationPanel;
 import viewPackage.game.NewGamePanel;
-import viewPackage.ranking.RankingPanel;
 import viewPackage.searches.MatchSearchPanel;
 import viewPackage.searches.ParticipationSearchPanel;
 import viewPackage.searches.TeamHistorySearchPanel;
@@ -29,6 +28,7 @@ public class PanelManager extends JPanel {
     private final JLabel infoLabel;
     private final MainWindow mainWindow;
     private ViThread viThread;
+    private final ConnectionController connectionController;
     public PanelManager(MainWindow mainWindow) {
         super(new FlowLayout(FlowLayout.LEADING, 0, 0));
         this.mainWindow = mainWindow;
@@ -103,10 +103,6 @@ public class PanelManager extends JPanel {
                     this.left.add(this.infoLabel);
                     yield new ModificationPanel(this);
                 }
-                case "RankingPanel" -> {
-                    this.left.add(this.infoLabel);
-                    yield new RankingPanel(this);
-                }
                 case "MatchSearchPanel" -> {
                     this.left.add(this.infoLabel);
                     yield new MatchSearchPanel();
@@ -128,13 +124,11 @@ public class PanelManager extends JPanel {
                     yield new TeamPanel(this);
                 }
                 case "GamesPanel" -> new GamesPanel();
-                default -> new HomePanel();
-                case "GamesPanel" -> new GamesPanel(this);
                 case "PlayerRankingForMatchPanel" -> {
                     this.left.add(this.infoLabel);
                     yield new PlayerRankingForMatchPanel();
                 }
-                default -> new HomePanel(this);
+                default -> new HomePanel();
             };
             destinationPanel.enterPanel();
             this.center.add((JPanel) destinationPanel);

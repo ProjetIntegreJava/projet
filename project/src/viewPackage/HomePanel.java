@@ -37,6 +37,7 @@ public class HomePanel extends JPanel implements Panel {
                     loginButton.setText("Access Granted.");
                     loginButton.setEnabled(false);
                 } catch (CantConnectToDbException ex) {
+                    System.out.println("Error: " + ex.getMessage());
                     JOptionPane.showMessageDialog(null, "Incorrect Password", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }

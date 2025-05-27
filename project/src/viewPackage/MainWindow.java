@@ -70,7 +70,7 @@ public class MainWindow extends JFrame {
         menuBar.add(infoMenu);
         JMenuItem rankingMenuItem = new JMenuItem("Ranking Teams");
         infoMenu.add(rankingMenuItem);
-        rankingMenuItem.addActionListener(e -> panelManager.changePanel("RankingPanel"));
+        rankingMenuItem.addActionListener(e -> panelManager.changePanel("PlayerRankingForMatchPanel"));
         JMenuItem akinatorMenuItem = new JMenuItem("Akinator Usage");
         infoMenu.add(akinatorMenuItem);
         akinatorMenuItem.addActionListener(e -> panelManager.changePanel("AkinatorUsagePanel"));
