@@ -24,10 +24,10 @@ public class MatchController {
     public void updateMatch(Match match) throws UpdateMatchException {
         matchManager.updateMatch(match);
     }
-    public void deleteMatchs(ArrayList<Integer> matchId) throws DeleteMatchException {
-        matchManager.deleteMatchs(matchId);
+    public void deleteMatches(ArrayList<Integer> matchId) throws DeleteMatchException {
+        matchManager.deleteMatches(matchId);
     }
-    public ArrayList<Match> getAllMatchs() throws ReadMatchException{
-        return matchManager.getAllMatchs();
+    public ArrayList<Match> getAllMatches() throws ReadMatchException{
+        return matchManager.getAllMatches();
     }
 }

@@ -3,22 +3,19 @@ package modelPackage;
 import java.time.LocalDate;
 
 public class Match {
-    private int id;
-    private Team teamBlue;
-    private Team teamRed;
-    private Competition competition;
-    private LocalDate creationDate;
-    private LocalDate occurenceDate;
-    private boolean isBlueWin;
-    private String replayLink;
-    private String summary;
-    public Match(int id, Team teamBlue, Team teamRed, Competition competition, LocalDate creationDate, LocalDate occurenceDate, boolean isBlueWin, String replayLink, String summary){
+    private final int id;
+    private final Team teamBlue, teamRed;
+    private final Competition competition;
+    private final LocalDate creationDate, occurrenceDate;
+    private final boolean isBlueWin;
+    private final String replayLink, summary;
+    public Match(int id, Team teamBlue, Team teamRed, Competition competition, LocalDate creationDate, LocalDate occurrenceDate, boolean isBlueWin, String replayLink, String summary){
         this.id = id;
         this.teamBlue = teamBlue;
         this.teamRed = teamRed;
         this.competition = competition;
         this.creationDate = creationDate;
-        this.occurenceDate = occurenceDate;
+        this.occurrenceDate = occurrenceDate;
         this.isBlueWin = isBlueWin;
         this.replayLink = replayLink;
         this.summary = summary;
@@ -39,8 +36,8 @@ public class Match {
     public LocalDate getCreationDate() {
         return creationDate;
     }
-    public LocalDate getOccurenceDate() {
-        return occurenceDate;
+    public LocalDate getOccurrenceDate() {
+        return occurrenceDate;
     }
     public boolean isBlueWin() {
         return isBlueWin;
@@ -50,5 +47,10 @@ public class Match {
     }
     public String getSummary() {
         return summary;
+    }
+
+    @Override
+    public String toString() {
+        return this.teamBlue.getName() + " - " + this.teamRed.getName() + " @ " + this.occurrenceDate.toString();
     }
 }

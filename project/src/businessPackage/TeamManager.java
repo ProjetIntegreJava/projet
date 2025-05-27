@@ -31,15 +31,15 @@ public class TeamManager {
         }
     }
 
-    public void updateTeam(Team team) throws UpdateTeamException {
+    public void updateTeam(String name, Team team) throws UpdateTeamException {
         try {
-            if (getTeam(team.getName()) == null) {
+            if (getTeam(name) == null) {
                 throw new UpdateTeamException("Équipe inexistant");
             }
         } catch (ReadTeamException e) {
             throw new UpdateTeamException("Une erreur s'est produite");
         }
-        dao.updateTeam(team);
+        dao.updateTeam(name, team);
     }
     public void deleteTeams(ArrayList<String> nameTeam) throws DeleteTeamsException {
         ArrayList<String> nameTeamList = new ArrayList<>();

@@ -27,7 +27,7 @@ public class TeamDBAccess implements TeamDataAccess{
             preparedStatement.setString(2, team.getClub().getName());
             preparedStatement.setString(3, team.getRegion().getName());
             preparedStatement.setDate(4, Date.valueOf(team.getFoundingDate()));
-            preparedStatement.setBoolean(5, team.isHasBeenWorldChampion());
+            preparedStatement.setBoolean(5, team.hasBeenWorldChampion());
             preparedStatement.setString(6, team.getDescription());
             preparedStatement.setInt(7, team.getNbFollowers());
 
@@ -74,24 +74,25 @@ public class TeamDBAccess implements TeamDataAccess{
     }
 
     @Override
-    public void updateTeam(Team team) throws UpdateTeamException {
+    public void updateTeam(String name, Team team) throws UpdateTeamException {
         try {
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(
-                    "UPDATE team SET club = ?, region = ?, founding_date = ?, has_been_world_champion = ?, description = ?, nb_followers = ? WHERE name = ?");
+                    "UPDATE team SET club = ?, region = ?, founding_date = ?, has_been_world_champion = ?, description = ?, nb_followers = ?, name = ? WHERE name = ?");
             preparedStatement.setString(1, team.getClub().getName());
             preparedStatement.setString(2, team.getRegion().getName());
             preparedStatement.setDate(3, Date.valueOf(team.getFoundingDate()));
-            preparedStatement.setBoolean(4, team.isHasBeenWorldChampion());
+            preparedStatement.setBoolean(4, team.hasBeenWorldChampion());
             preparedStatement.setString(5, team.getDescription());
             preparedStatement.setInt(6, team.getNbFollowers());
             preparedStatement.setString(7, team.getName());
+            preparedStatement.setString(8, name);
 
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected == 0) {
-                throw new UpdateTeamException("Aucune équipe mise à jour");
+                throw new UpdateTeamException("Couldn't update team: " + name + ". Team not found.");
             }
         } catch (SQLException e) {
-            throw new UpdateTeamException("Une erreur s'est produite lors de la mise à jour de l'équipe");
+            throw new UpdateTeamException("An error occurred while updating the team");
         }
     }
 

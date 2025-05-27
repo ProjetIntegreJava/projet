@@ -1,4 +1,4 @@
-DROP DATABASE lol;
+DROP DATABASE IF EXISTS lol;
 CREATE DATABASE lol;
 USE lol;
 
@@ -69,12 +69,12 @@ CREATE TABLE `match` (
     competition_name VARCHAR(255) NOT NULL,
     competition_year INT NOT NULL,
     creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    occurence_date DATE NOT NULL,
+    occurrence_date DATE NOT NULL,
     is_blue_win BOOLEAN NOT NULL,
     replay_link TEXT NULL,
     summary TEXT NULL,
-    FOREIGN KEY (team_blue) REFERENCES team(`name`),
-    FOREIGN KEY (team_red) REFERENCES team(`name`),
+    FOREIGN KEY (team_blue) REFERENCES team(`name`) ON UPDATE CASCADE,
+    FOREIGN KEY (team_red) REFERENCES team(`name`) ON UPDATE CASCADE,
     FOREIGN KEY (competition_name, competition_year) REFERENCES competition(`name`, `year`),
     CONSTRAINT chk_link CHECK (replay_link LIKE 'https://youtu.be/%')
 );
@@ -105,7 +105,7 @@ CREATE TABLE bans (
     id_match INT NOT NULL,
     PRIMARY KEY (champion, team, id_match),
     FOREIGN KEY (champion) REFERENCES champion(`name`),
-    FOREIGN KEY (team) REFERENCES team(`name`),
+    FOREIGN KEY (team) REFERENCES team(`name`) ON UPDATE CASCADE,
     FOREIGN KEY (id_match) REFERENCES `match`(id)
 );
 
@@ -124,6 +124,6 @@ CREATE TABLE team_history (
     FOREIGN KEY (id_player_three) REFERENCES player(id),
     FOREIGN KEY (id_player_four) REFERENCES player(id),
     FOREIGN KEY (id_player_five) REFERENCES player(id),
-    FOREIGN KEY (team) REFERENCES team(`name`),
+    FOREIGN KEY (team) REFERENCES team(`name`) ON UPDATE CASCADE,
     CONSTRAINT chk_date CHECK(beginning_date < ending_date)
 );
