@@ -5,13 +5,14 @@ import controllerPackage.CompetitionController;
 import controllerPackage.SearchController;
 import exceptionPackage.Champion.ReadChampionException;
 import exceptionPackage.Competition.ReadCompetitionException;
+import exceptionPackage.Search.SearchDataAccessException;
 import modelPackage.Champion;
 import modelPackage.Competition;
 import modelPackage.searches.ResultMatchData;
 import viewPackage.Panel;
-import viewPackage.PanelManager;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -87,8 +88,8 @@ public class MatchSearchPanel extends JPanel implements Panel {
                         data[i][5] = result.getClubRedName();
                         data[i][6] = result.getOccurrenceDate();
                     }
-                    resultTable.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
-                } catch (Exception ex) {
+                    resultTable.setModel(new DefaultTableModel(data, columnNames));
+                } catch (SearchDataAccessException ex) {
                     JOptionPane.showMessageDialog(this, "Error fetching matches: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {

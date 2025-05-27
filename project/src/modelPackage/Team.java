@@ -57,7 +57,7 @@ public class Team {
     public LocalDate getFoundingDate() {
         return foundingDate;
     }
-    public Boolean isHasBeenWorldChampion() {
+    public Boolean hasBeenWorldChampion() {
         return hasBeenWorldChampion;
     }
     public String getDescription() {
@@ -71,4 +71,5 @@ public class Team {
     public String toString() {
         return this.getName();
     }
+
 }

@@ -10,9 +10,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MainWindow extends JFrame {
-    private final JMenuBar menuBar;
-    private final JMenu appMenu, profilMenu, searchMenu, statMenu;
-    private final JMenuItem exit, home, inscription, profiles, playerTournaments, gameBetweenTwoDates, playerAllMatches, winrate, OpeningUsage;
     private final PanelManager panelManager;
     private final ConnectionController connectionController;
     public MainWindow(String title) {
@@ -30,53 +27,53 @@ public class MainWindow extends JFrame {
         });
         this.setBounds(250, 250, 800, 500);
 
-        this.menuBar = new JMenuBar();
-        this.setJMenuBar(this.menuBar);
+        JMenuBar menuBar = new JMenuBar();
+        this.setJMenuBar(menuBar);
 
-        this.appMenu = new JMenu("Application");
-        this.menuBar.add(this.appMenu);
-        this.exit = new JMenuItem("Quit");
+        JMenu appMenu = new JMenu("Application");
+        menuBar.add(appMenu);
+        JMenuItem exit = new JMenuItem("Quit");
         //Because of a conflict with Java versions between us, we can't use unnamed parameters e.g.: "_"
         //For some reason, Sebastien's SDK uses the -source 19 and Julien & Terence's SDKs use -source 24
         //Even if all of us use Java 24
-        this.exit.addActionListener(e -> {
+        exit.addActionListener(e -> {
             connectionController.closeConnection();
             System.exit(0);
         });
-        this.appMenu.add(this.exit);
+        appMenu.add(exit);
 
-        this.home = new JMenuItem("Home");
-        this.appMenu.add(this.home);
-        this.home.addActionListener(e -> panelManager.changePanel("HomePanel"));
-        this.profilMenu = new JMenu("Team");
-        this.menuBar.add(this.profilMenu);
-        this.inscription = new JMenuItem("Create a Team");
-        this.profilMenu.add(this.inscription);
-        this.inscription.addActionListener(e -> panelManager.changePanel("NewTeamPanel"));
-        this.profiles = new JMenuItem("Teams");
-        this.profilMenu.add(this.profiles);
-        this.profiles.addActionListener(e -> panelManager.changePanel("Teams"));
+        JMenuItem home = new JMenuItem("Home");
+        appMenu.add(home);
+        home.addActionListener(e -> panelManager.changePanel("HomePanel"));
+        JMenu teamMenu = new JMenu("Team");
+        menuBar.add(teamMenu);
+        JMenuItem createTeamMenu = new JMenuItem("Create a Team");
+        teamMenu.add(createTeamMenu);
+        createTeamMenu.addActionListener(e -> panelManager.changePanel("NewTeamPanel"));
+        JMenuItem teamsMenuItem = new JMenuItem("Teams");
+        teamMenu.add(teamsMenuItem);
+        teamsMenuItem.addActionListener(e -> panelManager.changePanel("TeamPanel"));
 
-        this.searchMenu = new JMenu("Searches");
-        this.menuBar.add(this.searchMenu);
-        this.playerTournaments = new JMenuItem("Get Match Data");
-        this.searchMenu.add(this.playerTournaments);
-        this.playerTournaments.addActionListener(e -> panelManager.changePanel("MatchSearchPanel"));
-        this.gameBetweenTwoDates = new JMenuItem("Get Participation Data");
-        this.searchMenu.add(this.gameBetweenTwoDates);
-        this.gameBetweenTwoDates.addActionListener(e -> panelManager.changePanel("ParticipationSearchPanel"));
-        this.playerAllMatches = new JMenuItem("Get Team History");
-        this.searchMenu.add(this.playerAllMatches);
-        this.playerAllMatches.addActionListener(e -> panelManager.changePanel("TeamHistorySearchPanel"));
+        JMenu searchMenu = new JMenu("Searches");
+        menuBar.add(searchMenu);
+        JMenuItem matchDataMenuItem = new JMenuItem("Get Match Data");
+        searchMenu.add(matchDataMenuItem);
+        matchDataMenuItem.addActionListener(e -> panelManager.changePanel("MatchSearchPanel"));
+        JMenuItem participationDataMenuItem = new JMenuItem("Get Participation Data");
+        searchMenu.add(participationDataMenuItem);
+        participationDataMenuItem.addActionListener(e -> panelManager.changePanel("ParticipationSearchPanel"));
+        JMenuItem teamHistoryMenuItem = new JMenuItem("Get Team History");
+        searchMenu.add(teamHistoryMenuItem);
+        teamHistoryMenuItem.addActionListener(e -> panelManager.changePanel("TeamHistorySearchPanel"));
 
-        this.statMenu = new JMenu("More info");
-        this.menuBar.add(this.statMenu);
-        this.winrate = new JMenuItem("Ranking Teams");
-        this.statMenu.add(this.winrate);
-        this.winrate.addActionListener(e -> panelManager.changePanel("RankingPanel"));
-        this.OpeningUsage = new JMenuItem("Akinator Usage");
-        this.statMenu.add(this.OpeningUsage);
-        this.OpeningUsage.addActionListener(e -> panelManager.changePanel("AkinatorUsagePanel"));
+        JMenu infoMenu = new JMenu("More info");
+        menuBar.add(infoMenu);
+        JMenuItem rankingMenuItem = new JMenuItem("Ranking Teams");
+        infoMenu.add(rankingMenuItem);
+        rankingMenuItem.addActionListener(e -> panelManager.changePanel("RankingPanel"));
+        JMenuItem akinatorMenuItem = new JMenuItem("Akinator Usage");
+        infoMenu.add(akinatorMenuItem);
+        akinatorMenuItem.addActionListener(e -> panelManager.changePanel("AkinatorUsagePanel"));
 
         this.pack();
 

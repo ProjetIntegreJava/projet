@@ -27,7 +27,7 @@ public class TeamDBAccess implements TeamDataAccess{
             preparedStatement.setString(2, team.getClub().getName());
             preparedStatement.setString(3, team.getRegion().getName());
             preparedStatement.setDate(4, Date.valueOf(team.getFoundingDate()));
-            preparedStatement.setBoolean(5, team.isHasBeenWorldChampion());
+            preparedStatement.setBoolean(5, team.hasBeenWorldChampion());
             preparedStatement.setString(6, team.getDescription());
             preparedStatement.setInt(7, team.getNbFollowers());
 
@@ -81,7 +81,7 @@ public class TeamDBAccess implements TeamDataAccess{
             preparedStatement.setString(1, team.getClub().getName());
             preparedStatement.setString(2, team.getRegion().getName());
             preparedStatement.setDate(3, Date.valueOf(team.getFoundingDate()));
-            preparedStatement.setBoolean(4, team.isHasBeenWorldChampion());
+            preparedStatement.setBoolean(4, team.hasBeenWorldChampion());
             preparedStatement.setString(5, team.getDescription());
             preparedStatement.setInt(6, team.getNbFollowers());
             preparedStatement.setString(7, team.getName());

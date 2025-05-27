@@ -1,6 +1,7 @@
 package viewPackage;
 
 import controllerPackage.ConnectionController;
+import modelPackage.Team;
 import viewPackage.game.GamesPanel;
 import viewPackage.game.ModificationPanel;
 import viewPackage.game.NewGamePanel;
@@ -8,6 +9,9 @@ import viewPackage.ranking.RankingPanel;
 import viewPackage.searches.MatchSearchPanel;
 import viewPackage.searches.ParticipationSearchPanel;
 import viewPackage.searches.TeamHistorySearchPanel;
+import viewPackage.team.ModificationTeamPanel;
+import viewPackage.team.NewTeamPanel;
+import viewPackage.team.TeamPanel;
 import viewPackage.thread.ViThread;
 
 import javax.swing.*;
@@ -39,7 +43,7 @@ public class PanelManager extends JPanel {
         ViThread viThread = new ViThread(this);
         viThread.start();
 
-        this.infoLabel = new JLabel("<html>Les champs avec * <br>sont obligatoires</html>");
+        this.infoLabel = new JLabel("<html>Fields with * <br>are mandatory</html>");
         this.infoLabel.setFont(this.getFont().deriveFont(10f));
 
         this.add(this.left);
@@ -115,8 +119,37 @@ public class PanelManager extends JPanel {
                     this.left.add(this.infoLabel);
                     yield new TeamHistorySearchPanel();
                 }
-                case "GamesPanel" -> new GamesPanel(this);
-                default -> new HomePanel(this, this.connectionController);
+                case "NewTeamPanel" -> {
+                    this.left.add(this.infoLabel);
+                    yield new NewTeamPanel();
+                }
+                case "TeamPanel" -> {
+                    this.left.add(this.infoLabel);
+                    yield new TeamPanel(this);
+                }
+                case "GamesPanel" -> new GamesPanel();
+                default -> new HomePanel();
+            };
+            destinationPanel.enterPanel();
+            this.center.add((JPanel) destinationPanel);
+            this.left.validate();
+            this.left.repaint();
+            this.center.validate();
+            this.center.repaint();
+        } else {
+            JOptionPane.showMessageDialog(null, "Veuillez vous connecter à la base de données d'abord.");
+        }
+    }
+    public void changePanel(String panelName, Object data) {
+        if(connectionController.getInstance() != null || Objects.equals(panelName, "HomePanel")) {
+            this.center.removeAll();
+            this.left.removeAll();
+            Panel destinationPanel = switch (panelName) {
+                case "ModificationTeamPanel" -> {
+                    this.left.add(this.infoLabel);
+                    yield new ModificationTeamPanel((Team) data);
+                }
+                default -> new HomePanel();
             };
             destinationPanel.enterPanel();
             this.center.add((JPanel) destinationPanel);
