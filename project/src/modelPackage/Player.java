@@ -13,11 +13,34 @@ public class Player {
     private String nationality;
 
     public Player(int id, String first_name, String last_name, String pseudo, LocalDate birthdate, String nationality){
-        this.id = id;
-        this.firstName = first_name;
-        this.lastName = last_name;
-        this.birthdate = birthdate;
-        this.nationality = nationality;
+        setId(id);
+        setFirstName(first_name);
+        setLastName(last_name);
+        setPseudo(pseudo);
+        setBirthdate(birthdate);
+        setNationality(nationality);
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+    }
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
+    }
+    public void setNationality(String nationality){
+        this.nationality = nationality;
+    }
+
+    public String getPseudo() {
+        return pseudo;
     }
 }

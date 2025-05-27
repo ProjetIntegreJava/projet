@@ -3,6 +3,7 @@ package viewPackage;
 import viewPackage.game.GamesPanel;
 import viewPackage.game.ModificationPanel;
 import viewPackage.game.NewGamePanel;
+import viewPackage.ranking.PlayerRankingForMatchPanel;
 import viewPackage.thread.ViThread;
 
 import javax.swing.*;
@@ -100,6 +101,10 @@ public class PanelManager extends JPanel {
                     yield new ModificationPanel(this);
                 }
                 case "GamesPanel" -> new GamesPanel(this);
+                case "PlayerRankingForMatchPanel" -> {
+                    this.left.add(this.infoLabel);
+                    yield new PlayerRankingForMatchPanel();
+                }
                 default -> new HomePanel(this);
             };
             destinationPanel.enterPanel();

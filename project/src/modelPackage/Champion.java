@@ -5,4 +5,7 @@ public class Champion {
     public Champion(String name){
         this.name = name;
     }
+    public String getName() {
+        return name;
+    }
 }

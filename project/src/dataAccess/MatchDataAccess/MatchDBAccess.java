@@ -59,18 +59,15 @@ public class MatchDBAccess implements MatchDataAccess{
 
     @Override
     public void updateMatch(Match match) throws UpdateMatchException {
-        // Implementation for updating a match in the database
     }
 
     @Override
     public void deleteMatchs(ArrayList<Integer> matchId) throws DeleteMatchException {
-        // Implementation for deleting matches from the database
     }
 
     @Override
     public ArrayList<Match> getAllMatchs() throws ReadMatchException {
-        // Implementation for getting all matches from the database
-        return new ArrayList<>(); // Placeholder return
+        return new ArrayList<>();
     }
 
     private Match resultSetToMatch(ResultSet resultSet) throws ReadMatchException, ReadTeamException, ReadCompetitionException{
