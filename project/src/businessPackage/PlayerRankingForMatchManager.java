@@ -14,11 +14,7 @@ public class PlayerRankingForMatchManager {
     }
     public ArrayList<Participation> getPlayerRankingForMatch(int matchId) throws ReadPlayerRankingForMatchException {
         ArrayList<Participation> allPlayer = new ArrayList<>();
-        try {
-            allPlayer = dao.getPlayerRankingForMatch(matchId);
-        } catch (ReadPlayerRankingForMatchException e) {
-            throw new ReadPlayerRankingForMatchException("Erreur lors de la récupération du classement des joueurs pour le match" + e.getMessage());
-        }
+        allPlayer = dao.getPlayerRankingForMatch(matchId);
         return sortByScore(allPlayer);
     }
 

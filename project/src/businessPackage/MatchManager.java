@@ -42,18 +42,16 @@ public class MatchManager {
         dao.updateMatch(match);
     }
     public void deleteMatches(ArrayList<Integer> matchId) throws DeleteMatchException {
-        ArrayList<Integer> idMatchList = new ArrayList<Integer>();
         for (int id : matchId) {
             try {
                 if (getMatch(id) == null) {
                     throw new DeleteMatchException("Équipe inexistant");
                 }
-                idMatchList.add(id);
             } catch (ReadMatchException e) {
                 throw new DeleteMatchException("Une erreur s'est produite");
             }
         }
-        dao.deleteMatchs(idMatchList);
+        dao.deleteMatchs(matchId);
     }
 
     public ArrayList<Match> getAllMatches() throws ReadMatchException{
