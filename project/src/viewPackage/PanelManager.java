@@ -137,7 +137,7 @@ public class PanelManager extends JPanel {
             this.center.validate();
             this.center.repaint();
         } else {
-            JOptionPane.showMessageDialog(null, "Veuillez vous connecter à la base de données d'abord.");
+            JOptionPane.showMessageDialog(null, "Please login to the database first.");
         }
     }
     public void changePanel(String panelName, Object data) {
@@ -147,7 +147,7 @@ public class PanelManager extends JPanel {
             Panel destinationPanel = switch (panelName) {
                 case "ModificationTeamPanel" -> {
                     this.left.add(this.infoLabel);
-                    yield new ModificationTeamPanel((Team) data);
+                    yield new ModificationTeamPanel((Team) data, this);
                 }
                 default -> new HomePanel();
             };
@@ -158,7 +158,7 @@ public class PanelManager extends JPanel {
             this.center.validate();
             this.center.repaint();
         } else {
-            JOptionPane.showMessageDialog(null, "Veuillez vous connecter à la base de données d'abord.");
+            JOptionPane.showMessageDialog(null, "Please login to the database first.");
         }
     }
 

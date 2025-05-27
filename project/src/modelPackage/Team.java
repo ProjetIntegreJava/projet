@@ -66,7 +66,30 @@ public class Team {
     public Integer getNbFollowers() {
         return nbFollower;
     }
-
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setClub(Club club) {
+        this.club = club;
+    }
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
+    public void setFoundingDate(LocalDate foundingDate) {
+        this.foundingDate = foundingDate;
+    }
+    public void setHasBeenWorldChampion(Boolean hasBeenWorldChampion) {
+        this.hasBeenWorldChampion = hasBeenWorldChampion;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public void setNbFollower(Integer nbFollower) {
+        this.nbFollower = nbFollower;
+    }
     @Override
     public String toString() {
         return this.getName();

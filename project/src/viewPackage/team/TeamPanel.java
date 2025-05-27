@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class TeamPanel extends JPanel implements Panel {
     private final PanelManager panelManager;
@@ -64,6 +65,28 @@ public class TeamPanel extends JPanel implements Panel {
                 JOptionPane.showMessageDialog(this, "Please select a team to modify.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
+        JButton deleteButton = new JButton("Delete");
+        deleteButton.addActionListener(e -> {
+            if (teamTable.getSelectedRows() != null && teamTable.getSelectedRow() != -1) {
+                ArrayList<String> selectedTeams = this.allTeams.stream()
+                        .filter(team -> teamTable.getSelectedRow() == this.allTeams.indexOf(team))
+                        .map(Team::getName)
+                        .collect(Collectors.toCollection(ArrayList::new));
+                int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the teams: " + selectedTeams + "?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    try {
+                        teamController.deleteTeams(selectedTeams);
+                        JOptionPane.showMessageDialog(this, "Team deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        this.panelManager.changePanel("TeamPanel");
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Please select a team to delete.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         this.add(buttonPanel, BorderLayout.SOUTH);
         buttonPanel.add(addButton);
         buttonPanel.add(modifyButton);
